@@ -1,6 +1,6 @@
 # Aplicación Trueque :iphone:
  #### Proyecto correspondiente a la materia de IHC
-INTEGRANTES DE GRUPO  :boy: :boy: :girl: :boy: :
+INTEGRANTES DE GRUPO  :boy: :boy: :boy: :girl: :
 - Víctor Álvarez
 - Andrés Alvear
 - Darío Figueroa
