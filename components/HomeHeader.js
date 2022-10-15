@@ -55,7 +55,7 @@ const HomeHeader = () => {
       </View>
 
       <Text h4 style={{ color: 'white', marginTop: 15 }}>
-        Messages
+        Mensajes
       </Text>
     </View>
   )
