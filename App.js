@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import AuthNavigation from './other/AuthNavigation'
 import { CONSTANTS } from './firebase-cometchat/CONSTANTS'
 
+
 export default function App() {
 const initCometChat = () => {
 let appID = CONSTANTS.APP_ID
