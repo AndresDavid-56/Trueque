@@ -1,17 +1,49 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, Dimensions, FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, Dimensions, FlatList, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
+
 
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
+import { firebaseConfig } from '../firebase-cometchat/firebase';
+
+import { useNavigation } from '@react-navigation/native';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase-cometchat/firebase';
 
 import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
+import { initializeApp } from 'firebase/app';
+const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
 
 
 const LoginScreen1 = ({ navigation }) => {
-   const [email, setEmail] = useState();
-   const [password, setPassword] = useState();
+   const [email, setEmail] = React.useState('');
+   const [password, setPassword] = React.useState('');
+
+
+   const app=initializeApp(firebaseConfig)
+   const auth=getAuth(app);
+
+   const handleSignIn=()=>{
+      signInWithEmailAndPassword(auth, email,password)
+      .then((userCredential)=>{
+         console.log('Ingreso exitoso')
+         const user=userCredential.user;
+         console.log(user)
+         navigation.navigate('AppStack');
+         Alert.alert('Bienvenido '+email)
+
+      })
+      .catch(error=>{
+         console.log(error)
+      })
+   }
+
+
+
+
+  
+
 
    //Función para iniciar sesión con gmail
 
@@ -29,7 +61,7 @@ const LoginScreen1 = ({ navigation }) => {
    return (
       <View style={styles.container} >
          <Image
-            source={require('../screens/src/images/Logo.png')}
+            source={require('../screens/src/images/Logo1.png')}
             style={styles.logo} />
 
          <FormInput
@@ -51,7 +83,7 @@ const LoginScreen1 = ({ navigation }) => {
          <FormButton
 
             buttonTitle="Iniciar Sesión"
-            onPress={() => navigation.navigate('')}
+            onPress={handleSignIn}
          />
          <TouchableOpacity style={styles.forgotButton} onPress={() => { }}>
             <Text style={styles.navButtonText}> ¿Olvidaste tu contraseña? </Text >
@@ -78,7 +110,7 @@ export default LoginScreen1
 
 const styles = StyleSheet.create({
    container: {
-      backgroundColor: '#f9fafd',
+      backgroundColor: COLORS.primary,
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
@@ -104,9 +136,24 @@ const styles = StyleSheet.create({
    navButtonText: {
       fontSize: 18,
       fontWeight: '500',
-      color: '#2e64e5',
+      color: COLORS.black,
       //fontFamily : 'Lato-Regular' ,
    },
+   errorMessage:
+   {
+      height: 72,
+      alignItems: "center",
+      justifyContent: "center",
+      marginHorizontal: 30
+   },
+
+   error: {
+      color: "#E9446A",
+      fontSize: 13,
+      fontWeight: "600",
+      textAlign: "center"
+   },
+
 
 
 });

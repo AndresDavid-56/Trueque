@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Dimensions, FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
 const { width, height } = Dimensions.get('window');
-const COLORS = { primary: '#282534', white: '#fff', black:'#000000' };
+const COLORS = { primary: '#fffaf2', white: '#fff', black:'#000000', turquesa:'#0ffff7', green:'#88ffad',grey:'#82877c'};
 const slides = [
 
    {
@@ -76,7 +76,7 @@ const OnboardingScreen = ({ navigation }) => {
                   currentSlideIndex == slides.length - 1 ? (
                      <View style={{ height: 50 }}>
                         <TouchableOpacity style={[styles.btn]} onPress={()=>navigation.replace("LoginScreen1")}>
-                           <Text style={{ fontWeight: 'bold', fontsize: 15, color: COLORS.white }} >
+                           <Text style={{ fontWeight: 'bold', fontsize: 15, color: COLORS.black }} >
                               EMPEZAR
                            </Text>
                         </TouchableOpacity>
@@ -98,13 +98,13 @@ const OnboardingScreen = ({ navigation }) => {
                                  fontSize: 15,
                                  color: COLORS.black
                               }}>
-                              SALTAR
+                              OMITIR
                            </Text>
                         </TouchableOpacity>
 
                         <View style={{ width: 15 }} />
                         <TouchableOpacity style={[styles.btn]} onPress={goNextSlide}>
-                           <Text style={{ fontWeight: 'bold', fontSize: 15, color: COLORS.white }}>NEXT</Text>
+                           <Text style={{ fontWeight: 'bold', fontSize: 15, color: COLORS.black }}>SIGUIENTE</Text>
                         </TouchableOpacity>
                      </View>)
 
@@ -143,8 +143,8 @@ const OnboardingScreen = ({ navigation }) => {
 
 
    return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }} >
-         <StatusBar backgroundColor={COLORS.white} />
+      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }} >
+         <StatusBar backgroundColor={COLORS.primary} />
          <FlatList
             ref={ref}
             onMomentumScrollEnd={updateCurrentSlideIndex}
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
       flex: 1,
       height: 50,
       borderRadius: 5,
-      backgroundColor: COLORS.primary,
+      backgroundColor: COLORS.green,
       justifyContent: 'center',
       alignItems: 'center',
    },

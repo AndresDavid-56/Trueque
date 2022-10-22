@@ -8,12 +8,20 @@ import ChatScreen from '../screens/Chat'
 import LoginScreen1 from '../screens/LoginScreen'
 import OnboardingScreen from '../screens/OnboardingScreen'
 import SignupScreen from '../screens/SignupScreen'
+//import HomeScreen1 from '../screens/HomeScreen'
+import HomeScreen1 from '../screens/HomeScreen'
+import MessagesScreen from '../screens/MessagesScreen'
+import ProfileScreen from '../screens/ProfileScreen'
+import AddProduct from '../screens/AddProduct'
+
+import AppStack from './AppStack'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const Stack = createNativeStackNavigator()
-const screenOption = {
-  headerShown: true,
+export const  screenOption = {
+  headerShown: false,
 }
+
 
 export const SignedInStack = () => (
   <NavigationContainer>
@@ -34,6 +42,12 @@ export const SignedOutStack = () => (
       <Stack.Screen name="LoginScreen1" component={LoginScreen1} />
       <Stack.Screen name="LoginScreen" component={LoginScreen}/>
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen}/>
+      {/*<Stack.Screen name="HomeScreen1" component={HomeScreen1}/>*/}
+      <Stack.Screen name="AppStack" component={AppStack}/>
+      <Stack.Screen name="Messages" component={MessagesScreen}/>
+      <Stack.Screen name="Profile" component={ProfileScreen}/>
+      <Stack.Screen name="AddProduct" component={AddProduct}/>
+
       
       <Stack.Screen name="SignupScreen" component={SignupScreen} options={({navigation}) => ({
           title: '',

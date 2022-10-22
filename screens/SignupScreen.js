@@ -1,17 +1,49 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Platform, StyleSheet, Alert } from 'react-native';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 import SocialButton from '../components/SocialButton';
-import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
-import LoginScreen1 from './LoginScreen';
+import { firebaseConfig } from '../firebase-cometchat/firebase';
 
-//import {AuthContext} from '../navigation/AuthProvider';
+import { getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase-cometchat/firebase';
+
+import { provider, signInWithPopup} from '../firebase-cometchat/firebase'
+import { initializeApp } from 'firebase/app';
+
+
+
+const COLORS = { primary: '#fffaf2', white: '#fff', black:'#000000', turquesa:'#0ffff7', green:'#88ffad',grey:'#82877c'};
+
+//import { AuthContext } from '../other/AuthProvider';
 
 const SignupScreen = ({ navigation }) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [confirmPassword, setConfirmPassword] = useState();
+
+    const [email, setEmail] = React.useState();
+    const [password, setPassword] = React.useState();
+    const [name, setName] = React.useState();
+    const [lastName, setLastName] = React.useState();
+
+    const app=initializeApp(firebaseConfig)
+    const auth=getAuth(app);
+
+    const handleCreateAccount=()=>{
+        createUserWithEmailAndPassword(auth,email,password,name, lastName)
+        .then((userCredential)=>{
+           console.log('¡Cuenta creada exitosamente!')
+           const user=userCredential.user;
+           console.log(user)
+           Alert.alert('!Cuenta creada exitosamente!')
+  
+        })
+        .catch(error=>{
+           console.log(error)
+           Alert.alert(error.message)
+        })
+     }
+
+   
+
+
 
  
 
@@ -26,12 +58,27 @@ const SignupScreen = ({ navigation }) => {
                 console.log(user)
             })
             .catch((error) => console.log(error)
+            
             )
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Crear Cuenta</Text>
+            <FormInput
+                labelValue={name}
+                onChangeText={(userName) => setName(userName)}
+                placeholderText="Nombres"
+                iconType="lock"
+                secureTextEntry={false}
+            />
+            <FormInput
+                labelValue={lastName}
+                onChangeText={(userLastName) => setLastName(userLastName)}
+                placeholderText="Apellidos"
+                iconType="lock"
+                secureTextEntry={false}
+            />
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
@@ -49,17 +96,9 @@ const SignupScreen = ({ navigation }) => {
                 secureTextEntry={true}
             />
 
-            <FormInput
-                labelValue={confirmPassword}
-                onChangeText={(userPassword) => setConfirmPassword(userPassword)}
-                placeholderText="Confirmar Contraseña"
-                iconType="lock"
-                secureTextEntry={true}
-            />
-
             <FormButton
                 buttonTitle="Crear Cuenta"
-                onPress={() => alert('Crear Cuenta Clickeado')}
+                onPress={handleCreateAccount}
             />
 
             <View style={styles.textPrivate}>
@@ -101,17 +140,16 @@ export default SignupScreen;
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#f9fafd',
+        backgroundColor: COLORS.primary,
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         padding: 20,
     },
     text: {
-        fontFamily: 'Kufam-SemiBoldItalic',
         fontSize: 28,
         marginBottom: 10,
-        color: '#051d5f',
+        color: COLORS.black,
     },
     navButton: {
         marginTop: 15,
@@ -121,8 +159,7 @@ const styles = StyleSheet.create({
     navButtonText: {
         fontSize: 18,
         fontWeight: '500',
-        color: '#2e64e5',
-        fontFamily: 'Kufam-SemiBoldItalic',
+        color: COLORS.black,
     },
     textPrivate: {
         flexDirection: 'row',
@@ -133,7 +170,6 @@ const styles = StyleSheet.create({
     color_textPrivate: {
         fontSize: 13,
         fontWeight: '400',
-        fontFamily: 'Kufam-SemiBoldItalic',
         color: 'grey',
     },
 });

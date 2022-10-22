@@ -3,7 +3,7 @@ import ChatContainer from '../components/ChatContainer'
 import FloatingButton from '../components/FloatingButton'
 import HomeHeader from '../components/HomeHeader'
 import UserList from '../components/UserList'
-const HomeScreen = ({ navigation }) => {
+const HomeScreen1 = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <HomeHeader />
@@ -13,7 +13,7 @@ const HomeScreen = ({ navigation }) => {
         </SafeAreaView>
     )
 }
-export default HomeScreen
+export default HomeScreen1
 const styles = StyleSheet.create({
     container: {
         flex: 1,
