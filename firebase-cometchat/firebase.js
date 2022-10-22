@@ -28,7 +28,7 @@ import {
 } from 'firebase/firestore'
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyAVsFDHo1vfLMtmFfM_BXgvrhE8oTylxOA",
     authDomain: "chat-trueque-01.firebaseapp.com",
     projectId: "chat-trueque-01",

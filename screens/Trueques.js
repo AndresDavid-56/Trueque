@@ -2,8 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import FormButton from "../components/FormButton";
-import moment from "moment";
-import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
+//import moment from "moment";
 
 // temporary data until we pull from Firebase
 const posts = [
@@ -11,43 +10,14 @@ const posts = [
         id: "1",
         name: "Usuario T",
         text:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-        timestamp: 1569109273786,
-        avatar: require("./src/images/userProfile.png"),
-        image: require("./src/images/post15.jpg")
-    },
-    {
-        id: "2",
-        name: "Usuario T",
-        text:
-            "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        timestamp: 1569109273726,
-        avatar: require("./src/images/userProfile.png"),
-        image: require("./src/images/post7.jpg")
-    },
-    {
-        id: "3",
-        name: "Usuario T",
-        text:
-            "Amet mattis vulputate enim nulla aliquet porttitor lacus luctus. Vel elit scelerisque mauris pellentesque pulvinar pellentesque habitant.",
+            "Has intercambiado 'Computador Toshiba poco uso' exitosamente",
         timestamp: 1569109273726,
         avatar: require("./src/images/userProfile.png"),
         image: require("./src/images/post15.jpg")
     },
-    {
-        id: "4",
-        name: "Usuario T",
-        text:
-            "At varius vel pharetra vel turpis nunc eget lorem. Lorem mollis aliquam ut porttitor leo a diam sollicitudin tempor. Adipiscing tristique risus nec feugiat in fermentum.",
-        timestamp: 1569109273726,
-        avatar: require("./src/images/userProfile.png"),
-        image: require("./src/images/profile3.jpg")
-    }
 ];
 
-export default class HomeScreen1 extends React.Component {
-
-   
+export default class Trueques extends React.Component {
     renderPost = post => {
         return (
             <View style={styles.feedItem} >
@@ -56,25 +26,17 @@ export default class HomeScreen1 extends React.Component {
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <View>
                             <Text style={styles.name}>{post.name}</Text>
-                            <Text style={styles.timestamp}>{moment(post.timestamp).fromNow()}</Text>
+                            {/*<Text style={styles.timestamp}>{moment(post.timestamp).fromNow()}</Text>*/}
                         </View>
 
                         <Ionicons name="ellipsis-horizontal-outline" size={24} color="#73788B" />
                     </View>
                     <Text style={styles.post}>{post.text}</Text>
                     <Image source={post.image} style={styles.postImage} resizeMode="cover" />
+                    <Text style={styles.post}>Calificación: 9.9/10</Text>
 
-                    <View style={{ flexDirection: "row", paddingRight: 40 }}>
-                        <FormButton buttonTitle="Intercambiar"></FormButton>
-                        <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginLeft: 40, paddingVertical:25 }} />
-                        
-                        {/*
-                        <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginRight: 16 }} />
-        <Ionicons name="chatbubbles-outline" size={24} color="#73788B" />*/}
-                    </View>
-                    
                 </View>
-            </View>
+            </View >
         );
     };
 
@@ -145,13 +107,15 @@ const styles = StyleSheet.create({
     post: {
         marginTop: 16,
         fontSize: 14,
+        paddingRight: 20,
         color: "#838899"
     },
     postImage: {
         width: undefined,
         height: 150,
         borderRadius: 5,
-        marginVertical: 16
+        marginVertical: 16,
+        marginHorizontal: 40,
+        marginLeft: 0,
     }
 });
-
