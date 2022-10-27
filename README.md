@@ -3,7 +3,6 @@
 INTEGRANTES DE GRUPO  :boy: :boy: :boy: :girl: :
 - Víctor Álvarez
 - Andrés Alvear
-- Darío Figueroa
 - Micaela Males
 
 ## Descripción :pencil2:
