@@ -13,6 +13,7 @@ import HomeScreen1 from '../screens/HomeScreen'
 import MessagesScreen from '../screens/MessagesScreen'
 import ProfileScreen from '../screens/ProfileScreen'
 import AddProduct from '../screens/AddProduct'
+import AddPost from '../screens/AddPost'
 
 import AppStack from './AppStack'
 
@@ -46,7 +47,8 @@ export const SignedOutStack = () => (
       <Stack.Screen name="AppStack" component={AppStack}/>
       <Stack.Screen name="Messages" component={MessagesScreen}/>
       <Stack.Screen name="Profile" component={ProfileScreen}/>
-      <Stack.Screen name="AddProduct" component={AddProduct}/>
+
+      
 
       
       <Stack.Screen name="SignupScreen" component={SignupScreen} options={({navigation}) => ({

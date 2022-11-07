@@ -8,11 +8,15 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import HomeScreen1 from '../screens/HomeScreen';
+
 import MessagesScreen from '../screens/MessagesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AddProduct from '../screens/AddProduct';
-import InventoryScreen from '../screens/InventoryScreen';
+import InventoryScreen from '../screens/FavoritesScreen';
 import EditProfile from '../screens/EditProfile';
+import AddPost from '../screens/AddPost';
+import AddPostScreen from '../screens/AddPostScreen';
+import HomeScreenPost from '../screens/HomeScreenPost';
 //import ChatScreen from '../screens/ChatScreen';
 //import ProfileScreen from '../screens/ProfileScreen';
 //import AddPostScreen from '../screens/AddPostScreen';
@@ -27,7 +31,8 @@ const FeedStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen
       name="TRUEQUE"
-      component={HomeScreen1}
+      component={HomeScreenPost}
+      
       options={{
         headerTitleAlign: 'center',
         headerTitleStyle: {
@@ -39,6 +44,18 @@ const FeedStack = ({ navigation }) => (
           shadowColor: '#000000',
           elevation: 4,
         },
+        headerRight:()=>(
+          <View style={{marginRight: 15}}>
+            <Ionic
+              name="log-out-outline"
+              size={24}
+              backgroundColor="#fff"
+              color="#000000"
+              onPress={() => navigation.navigate('AddPost')}
+            />
+          </View>
+
+        ),
         /*
         headerRight: () => (
           <View style={{marginRight: 5}} >
@@ -56,12 +73,12 @@ const FeedStack = ({ navigation }) => (
 
     <Stack.Screen
       name="AddPost"
-      component={AddProduct}
+      component={AddPostScreen}
       options={{
         title: '',
         headerTitleAlign: 'center',
         headerStyle: {
-          backgroundColor: '#2e64e515',
+          backgroundColor: COLORS.primary,
           shadowColor: '#2e64e515',
           elevation: 0,
         },
@@ -221,7 +238,7 @@ const AppStack = () => {
       />
       <Tab.Screen
         name="Añadir"
-        component={AddProduct}
+        component={AddPostScreen}
         options={{
           // tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
@@ -235,12 +252,12 @@ const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name=" Mi inventario"
+        name="Favoritos"
         component={InventoryScreen}
         options={{
           // tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="layers-outline" color={color} size={size} />
+            <Ionicons name="heart-outline" color={color} size={size} />
           ),
         }}
       />
