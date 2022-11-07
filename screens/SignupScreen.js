@@ -65,20 +65,7 @@ const SignupScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Crear Cuenta</Text>
-            <FormInput
-                labelValue={name}
-                onChangeText={(userName) => setName(userName)}
-                placeholderText="Nombres"
-                iconType="lock"
-                secureTextEntry={false}
-            />
-            <FormInput
-                labelValue={lastName}
-                onChangeText={(userLastName) => setLastName(userLastName)}
-                placeholderText="Apellidos"
-                iconType="lock"
-                secureTextEntry={false}
-            />
+            
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}

@@ -3,7 +3,11 @@ import { View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from "react
 import { Ionicons } from "@expo/vector-icons";
 import FormButton from "../components/FormButton";
 import moment from "moment";
+
+import { database } from "../firebase-cometchat/firebase";
+import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
+import Product from "../components/Product";
 
 // temporary data until we pull from Firebase
 const posts = [
@@ -45,17 +49,29 @@ const posts = [
     }
 ];
 
+
+
 export default class HomeScreen1 extends React.Component {
 
+   state={email:"",displayName:""};
+   componentDidMount(){
+
+    const{email,displayName}=firebase.auth().currentUser;
+    this.setState({email,displayName});
+    
+   }
    
     renderPost = post => {
         return (
+            
             <View style={styles.feedItem} >
+            
                 <Image source={post.avatar} style={styles.avatar} />
                 <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <View>
                             <Text style={styles.name}>{post.name}</Text>
+                          
                             <Text style={styles.timestamp}>{moment(post.timestamp).fromNow()}</Text>
                         </View>
 

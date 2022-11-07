@@ -10,6 +10,8 @@ import {
 import Ionic from 'react-native-vector-icons/Ionicons';
 
 const EditProfile = ({route, navigation}) => {
+
+  
   //const {name, accountName, profileImage} = route.params;
   
   /*const TostMessage = () => {
