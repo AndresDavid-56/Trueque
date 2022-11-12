@@ -3,63 +3,15 @@ import {View, Text, Image, TouchableOpacity} from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 export const COLORS = { primary: '#fffaf2', white: '#fff', black:'#000000', turquesa:'#0ffff7', green:'#88ffad',grey:'#82877c'};
-export const ProfileBody = ({
-  name,
-  accountName,
-  profileImage,
-  post,
-  followers,
-  following,
-}) => {
+export default function ProfileBody({
+  id,
+  userId,
+    email,
+    name,
+    lastName,
+}) {
   return (
     <View>
-      {accountName ? (
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: 'bold',
-              }}>
-              {accountName}
-            </Text>
-            <Feather
-              name="chevron-down"
-              style={{
-                fontSize: 20,
-                color: 'black',
-                paddingHorizontal: 5,
-                opacity: 0.5,
-              }}
-            />
-          </View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Feather
-              name="plus-square"
-              style={{
-                fontSize: 25,
-                color: 'black',
-                paddingHorizontal: 15,
-              }}
-            />
-            <Feather
-              name="menu"
-              style={{
-                fontSize: 25,
-              }}
-            />
-          </View>
-        </View>
-      ) : null}
       <View
         style={{
           flexDirection: 'row',
@@ -72,12 +24,15 @@ export const ProfileBody = ({
             alignItems: 'center',
           }}>
           <Image
-            source={profileImage}
+            source={require('../screens/src/images/ImageUser.png')}
             style={{
               resizeMode: 'cover',
               width: 80,
               height: 80,
               borderRadius: 100,
+              borderWidth:0.1
+              
+              
             }}
           />
           <Text
@@ -89,18 +44,13 @@ export const ProfileBody = ({
           </Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{post}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>1</Text>
           <Text>Trueques</Text>
         </View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{followers}</Text>
+          <Text style={{fontWeight: 'bold', fontSize: 18}}>9.9</Text>
           <Text>Calificación</Text>
         </View>
-        {/*
-        <View style={{alignItems: 'center'}}>
-          <Text style={{fontWeight: 'bold', fontSize: 18}}>{following}</Text>
-          <Text>Following</Text>
-          </View>*/}
       </View>
     </View>
   );
@@ -132,7 +82,7 @@ export const ProfileButtons = ({id, name, accountName, profileImage}) => {
               style={{
                 width: '100%',
                 height: 35,
-                borderRadius: 5,
+                borderRadius: 10,
                 borderColor: '#DEDEDE',
                 borderWidth: 1,
                 justifyContent: 'center',

@@ -1,7 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
-import { Timestamp } from "firebase/firestore";
 import hasMediaLibraryPermissionGranted from "./hasMediaLibraryPermissionGranted"
-import firebase from "firebase/compat";
+
 
 
 const uploadImageFromDevice = async () => {

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
-import { database } from '../firebase-cometchat/firebase';
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import FormButton from './FormButton';
-import { PostImg } from '../screens/styles/FeedStyles';
-import firebase from "firebase/compat/app";
 import moment from 'moment';
 import 'moment/locale/es';
 
@@ -27,19 +23,13 @@ export default function Product({
         return (
             <View style={styles.feedItem} >
 
-                <Image source={{uri:postImg}} style={styles.avatar} />
+                <Image source={require('../screens/src/images/ImageUser.png')} style={styles.avatar} />
                 <View style={{ flex: 1 }}>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                         <View>
-     
                             <Text style={styles.name}>{titulo}</Text>
-                        
-                            <Text style={styles.timestamp}>hace {moment(timestamp).fromNow('ss')}</Text>
-                            
-                      
+                            <Text style={styles.timestamp}>hace {moment(timestamp).fromNow('ss')}</Text> 
                         </View>
-
-                        <Ionicons name="ellipsis-horizontal-outline" size={24} color="#73788B" />
                     </View>
                     <Text style={styles.post}>{desc}</Text>
                     <Image source={{uri:postImg}} style={styles.postImage} resizeMode="contain" ></Image>
@@ -48,19 +38,11 @@ export default function Product({
                     <View style={{ flexDirection: "row", paddingRight: 40 }}>
                         <FormButton buttonTitle="Intercambiar"></FormButton>
                         <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginLeft: 40, paddingVertical: 25 }} />
-
-                        {/*
-                            <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginRight: 16 }} />
-            <Ionicons name="chatbubbles-outline" size={24} color="#73788B" />*/}
                     </View>
 
                 </View>
             </View>
         )
-
-
-    
-    
 }
 const styles = StyleSheet.create({
     container: {
@@ -99,7 +81,8 @@ const styles = StyleSheet.create({
         width: 36,
         height: 36,
         borderRadius: 18,
-        marginRight: 16
+        marginRight: 16,
+        borderWidth:0.2
     },
     name: {
         fontSize: 25,

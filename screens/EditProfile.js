@@ -8,22 +8,54 @@ import {
   TextInput,
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
+import firebase from 'firebase/compat';
+import { initializeApp } from 'firebase/compat';
+import { firebaseConfig,doc,database,updateDoc } from '../firebase-cometchat/firebase';
+import FormButton from '../components/FormButton';
 
-const EditProfile = ({route, navigation}) => {
+
+
+
+export default function EditProfile({
+
+  id,
+  userId,
+  email,
+  name,
+  lastName,
+
+}) {
+  initializeApp(firebaseConfig);
+  const [nombre, setNombre] = React.useState('');
+  const [apellido, setApellido] = React.useState('');
+
+
+  const onEdit = () => {
+    const docRef = doc(database, "users", id);
+    updateDoc(docRef, {
+      name: nombre,
+      lastName: apellido
+
+    })
+  }
 
   
-  //const {name, accountName, profileImage} = route.params;
-  
-  /*const TostMessage = () => {
-    ToastAndroid.show('Edited Sucessfully !', ToastAndroid.SHORT);
-  };*/
+  const user = firebase.auth().currentUser
+
+
+
+
+
+
   return (
+
     <View
       style={{
         width: '100%',
         height: '100%',
         backgroundColor: 'white',
       }}>
+
       <View
         style={{
           flexDirection: 'row',
@@ -31,32 +63,24 @@ const EditProfile = ({route, navigation}) => {
           justifyContent: 'space-between',
           padding: 10,
         }}>
-            {/*
-        <TouchableOpacity onPress={() => navigation.navigate('ProfileScreen')}>
-          <Ionic name="close-outline" style={{fontSize: 35}} />
-        </TouchableOpacity>
-        <Text style={{fontSize: 16, fontWeight: 'bold'}}>Editar Perfil</Text>
-        <TouchableOpacity
-          onPress={() => {
-            TostMessage();
-            navigation.goBack();
-          }}>
-          <Ionic name="checkmark" style={{fontSize: 35, color: '#3493D9'}} />
-        </TouchableOpacity>*/}
+
       </View>
-      <View style={{padding: 20, alignItems: 'center'}}>
+      <View style={{ padding: 20, alignItems: 'center' }}>
         <Image
-          source={require('./src/images/userProfile.png')}
-          style={{width: 80, height: 80, borderRadius: 100}}
+          source={require('./src/images/ImageUser.png')}
+          style={{ width: 80, height: 80, borderRadius: 100 }}
         />
         <Text
           style={{
             color: '#3493D9',
           }}>
-          Cambiar Foto
+          {name}
+
+          <Text> </Text>
+          {lastName}
         </Text>
       </View>
-      <View style={{padding: 10}}>
+      <View style={{ padding: 10 }}>
         <View>
           <Text
             style={{
@@ -66,7 +90,8 @@ const EditProfile = ({route, navigation}) => {
           </Text>
           <TextInput
             placeholder="Nombre"
-            //defaultValue={name}
+            defaultValue={name}
+            onChangeText={(nombre) => setNombre(nombre)}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
@@ -74,26 +99,48 @@ const EditProfile = ({route, navigation}) => {
             }}
           />
         </View>
-        <View style={{paddingVertical: 10}}>
+        <View>
           <Text
             style={{
               opacity: 0.5,
             }}>
-            Usuario
+            Apellido
           </Text>
           <TextInput
-            placeholder="Usuario"
-            //defaultValue={accountName}
+            placeholder="Apellido"
+            defaultValue={lastName}
+            onChangeText={(apellido) => setApellido(apellido)}
             style={{
               fontSize: 16,
               borderBottomWidth: 1,
               borderColor: '#CDCDCD',
             }}
           />
+        </View>
+        <View style={{ paddingVertical: 10 }}>
+          <Text
+            style={{
+              opacity: 0.5,
+            }}>
+            Email
+          </Text>
+          <TextInput
+            placeholder="Email"
+            defaultValue={email}
+            editable={false}
+            style={{
+              fontSize: 16,
+              borderBottomWidth: 1,
+              borderColor: '#CDCDCD',
+            }}
+          />
+          <FormButton
+            buttonTitle="Editar"
+            onPress={onEdit}>
+          </FormButton>
         </View>
       </View>
     </View>
   );
 };
 
-export default EditProfile;

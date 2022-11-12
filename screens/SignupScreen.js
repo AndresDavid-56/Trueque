@@ -1,20 +1,21 @@
-import React, { useContext, useState } from 'react';
-import { View, Text, TouchableOpacity, Platform, StyleSheet, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 import SocialButton from '../components/SocialButton';
 import { firebaseConfig } from '../firebase-cometchat/firebase';
 
-import { getAuth,createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase-cometchat/firebase';
+import { getAuth, createUserWithEmailAndPassword,addDoc,collection } from '../firebase-cometchat/firebase';
 
-import { provider, signInWithPopup} from '../firebase-cometchat/firebase'
+import { provider, signInWithPopup, database } from '../firebase-cometchat/firebase'
 import { initializeApp } from 'firebase/app';
+import firebase from 'firebase/compat';
 
 
 
-const COLORS = { primary: '#fffaf2', white: '#fff', black:'#000000', turquesa:'#0ffff7', green:'#88ffad',grey:'#82877c'};
+const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
-//import { AuthContext } from '../other/AuthProvider';
+
 
 const SignupScreen = ({ navigation }) => {
 
@@ -23,29 +24,42 @@ const SignupScreen = ({ navigation }) => {
     const [name, setName] = React.useState();
     const [lastName, setLastName] = React.useState();
 
-    const app=initializeApp(firebaseConfig)
-    const auth=getAuth(app);
-
-    const handleCreateAccount=()=>{
-        createUserWithEmailAndPassword(auth,email,password,name, lastName)
-        .then((userCredential)=>{
-           console.log('¡Cuenta creada exitosamente!')
-           const user=userCredential.user;
-           console.log(user)
-           Alert.alert('!Cuenta creada exitosamente!')
-  
-        })
-        .catch(error=>{
-           console.log(error)
-           Alert.alert(error.message)
-        })
-     }
-
-   
+    const app = initializeApp(firebaseConfig)
+    const auth = getAuth(app);
 
 
+    const handleCreateAccount = () => {
+        createUserWithEmailAndPassword(auth, email, password, name, lastName)
+            .then((userCredential) => {
+                console.log('¡Cuenta creada exitosamente!')
+                const user = userCredential.user;
+                const Users = async () => {
+                    await addDoc(collection(database, 'users'), {
+                        userId: user.uid,
+                        email: user.email,
+                        name: name,
+                        lastName: lastName,
+                        createdAt: new Date(),
+                    });
+                }
+                Users();
 
- 
+                console.log(user)
+                Alert.alert('¡Cuenta creada exitosamente!')
+
+            })
+            .catch(error => {
+                console.log(error)
+                Alert.alert(error.message)
+            })
+    }
+    
+
+
+
+
+
+
 
     //const {register} = useContext(AuthContext);
     //Función para iniciar sesión con gmail
@@ -58,19 +72,37 @@ const SignupScreen = ({ navigation }) => {
                 console.log(user)
             })
             .catch((error) => console.log(error)
-            
+
             )
     }
 
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Crear Cuenta</Text>
-            
+            <FormInput
+                labelValue={name}
+                onChangeText={(userName) => setName(userName)}
+                placeholderText="Nombre"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+            />
+            <FormInput
+                labelValue={lastName}
+                onChangeText={(lastName) => setLastName(lastName)}
+                placeholderText="Apellido"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+            />
+
             <FormInput
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
                 placeholderText="Email"
-                iconType="user"
+                iconType="email"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
