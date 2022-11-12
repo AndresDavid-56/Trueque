@@ -11,7 +11,7 @@ const FormInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
                 <AntDesign name={iconType} size={25} color="#666" />
             </View >
             <TextInput
-                value={labelValue}
+                defaultValue={labelValue}
                 style={styles.input}
                 numberOfLines={4}
                 placeholder={placeholderText}

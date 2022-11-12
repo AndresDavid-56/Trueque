@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Dimensions, FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
+
 const { width, height } = Dimensions.get('window');
 const COLORS = { primary: '#fffaf2', white: '#fff', black:'#000000', turquesa:'#0ffff7', green:'#88ffad',grey:'#82877c'};
 const slides = [

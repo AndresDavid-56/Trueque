@@ -4,17 +4,11 @@ import {
   Text,
   StyleSheet,
   Image,
-  Alert,
-  ActivityIndicator,
-  Platform,
   useWindowDimensions,
 } from 'react-native';
 import Constants from "expo-constants";
 import { AntDesign, Feather } from "@expo/vector-icons";
-import ActionButton from 'react-native-action-button';
-import Icon from 'react-native-vector-icons/Ionicons';
-import * as ImagePicker from "expo-image-picker";
-import { addDoc, collection, firebaseConfig, getFirestore, storage } from '../firebase-cometchat/firebase';
+import { addDoc, collection } from '../firebase-cometchat/firebase';
 import firebase from 'firebase/compat';
 import { database } from '../firebase-cometchat/firebase';
 import uploadImageFromDevice from '../other/uploadImageFromDevice';
@@ -22,36 +16,16 @@ import getBlobFromUri from '../other/getBlobFromUri';
 import manageFileUpload from '../other/manageFileUpload';
 import FormInput from '../components/FormInput';
 
-
-
-
 import {
-  InputField,
-  InputWrapper,
-  AddImage,
   SubmitBtn,
   SubmitBtnText,
-  StatusWrapper,
 } from './styles/AddPost';
-import { TouchableOpacity } from 'react-native';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import * as FileSystem from 'expo-file-system'
-import { ScrollView } from 'react-native-gesture-handler';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { Timestamp } from 'firebase/firestore';
-import { number } from 'prop-types';
 import { COLORS } from '../components/ProfileBody';
 
 
 
-
-
-
-//import { AuthContext } from '../navigation/AuthProvider';
-
-
 const AddPostScreen = ({ navigation }) => {
-  //const {user, logout} = useContext(AuthContext);
   const user = firebase.auth().currentUser;
 
 
@@ -102,72 +76,17 @@ const AddPostScreen = ({ navigation }) => {
   };
 
 
-
-
-  /*
-    const [image, setImage] = useState(null);
-    const [uploading, setUploading] = useState(false);
-    const [transferred, setTransferred] = useState(0);
-    const [post, setPost] = useState(null);*/
-
-
-
-
-
-
-
-  const takePhotoFromCamera = () => {
-    ImagePicker.openCamera({
-      width: 1200,
-      height: 780,
-      cropping: true,
-    }).then((image) => {
-      console.log(image);
-      const imageUri = Platform.OS === 'ios' ? image.sourceURL : image.path;
-      setImage(imageUri);
-    });
-  };
-
-  const choosePhotoFromLibrary = async () => {
-
-
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-
-    });
-    console.log(result);
-
-    if (!result.cancelled) {
-
-      const source = result.uri;
-      setImage(source);
-      console.log("Source: ", source);
-      console.log("URL:", uploadImage());
-
-    }
-
-
-
-  }
-
-
-
-
-
-
-
-
+  //Subir Post
 
   const submitPost = async () => {
     const imageUrl = remoteURL;
     console.log('Image Url: ', imageUrl);
     console.log('Titulo: ', titulo);
     console.log('Descripción: ', desc);
-  
- 
+
+    //Conexión firebase con db products
+
+
 
 
     await addDoc(collection(database, 'products'), {
@@ -179,35 +98,6 @@ const AddPostScreen = ({ navigation }) => {
       postTime: new Date(),
       timestamp: new Date().getTime(),
     });
-    /*
-    
-    onSend.then(() => {
-      console.log('Post Added!');
-      Alert.alert(
-        'Post published!',
-        'Your post has been published Successfully!',
-      );
-      setPost(null);
-    })
-    .catch((error) => {
-      console.log('Something went wrong with added post to firestore.', error);
-    });
-  }
-
-  async function uploadImage(imageUrl) {
-    try{
-      const response =await fetch(imageUrl);
-      const blob=await response.blob();
-      const reference=ref(storage,`images/`);
-      const result=await uploadBytes(reference,blob);
-      const url= await getDownloadURL(result.ref);
-      console.log("URLLL:",url);
-
-      return url
-
-    }catch(err){
-      return Promise.reject(err);
-    }*/
 
 
 
@@ -281,56 +171,10 @@ const AddPostScreen = ({ navigation }) => {
             <SubmitBtn onPress={submitPost}>
               <SubmitBtnText>Publicar</SubmitBtnText>
             </SubmitBtn>
-            {/*
-
-          <Text>
-            Image has been uploaded at
-            <Text style={{ color: "blue" }}> {remoteURL} </Text>
-      </Text>*/}
           </View>
         )}
-      </View></KeyboardAwareScrollView>
-    /*
-    <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('TRUEQUE')}>
-        <Text>ATRÁS</Text>
-      </TouchableOpacity>
-      <InputWrapper>
-        {image != null ? <AddImage source={{ uri: image }} /> : null}
-
-        <InputField
-          placeholder="Describe el Producto"
-          multiline
-          numberOfLines={4}
-          value={post}
-          onChangeText={(content) => setPost(content)}
-        />
-        {uploading ? (
-          <StatusWrapper>
-            <Text>{transferred} % Completed!</Text>
-            <ActivityIndicator size="large" color="#0000ff" />
-          </StatusWrapper>
-        ) : (
-          <SubmitBtn onPress={submitPost}>
-            <SubmitBtnText>Post</SubmitBtnText>
-          </SubmitBtn>
-        )}
-      </InputWrapper>
-      <ActionButton buttonColor="#2e64e5">
-        <ActionButton.Item
-          buttonColor="#9b59b6"
-          title="Take Photo"
-          onPress={takePhotoFromCamera}>
-          <Icon name="camera-outline" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#3498db"
-          title="Choose Photo"
-          onPress={choosePhotoFromLibrary}>
-          <Icon name="md-images-outline" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-      </ActionButton>
-    </View>*/
+      </View>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -361,15 +205,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  /*
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  actionButtonIcon: {
-    fontSize: 20,
-    height: 22,
-    color: 'white',
-  },*/
 });

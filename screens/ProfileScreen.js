@@ -1,80 +1,126 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { ProfileBody, ProfileButtons } from '../components/ProfileBody';
-//import Entypo from 'react-native-vector-icons/Entypo';
-//import BottomTabView from '../components/BottomTabView';
-import firebase from 'firebase/compat';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, getAuth } from '../firebase-cometchat/firebase';
-
-
-import MessagesScreen from './MessagesScreen';
-import Trueques from './Trueques';
-const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
+import { View, Text, Image} from 'react-native';
+import { ProfileButtons } from '../components/ProfileBody';
+import ProfileBody from '../components/ProfileBody';
+import InventoryScreen from './InventoryScreen';
 import { Ionicons } from "@expo/vector-icons";
+import { ScrollView } from 'react-native';
+import firebase from 'firebase/compat';
+import { collection, database, firebaseConfig } from '../firebase-cometchat/firebase';
+import { initializeApp } from 'firebase/compat';
 
-export default class Profile extends React.Component {
-
-  state = { email: "", displayName: "" };
-  componentDidMount() {
-
-    const { email, displayName } = firebase.auth().currentUser;
-    this.setState({ email, displayName });
-
-  }
+import EditProfile from './EditProfile';
+import InfProfile from '../components/InfProfile';
 
 
+const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
 
-  render() {
-    return (
-      <View style={{ width: '100%', height: '100%', backgroundColor: COLORS.primary }}>
-        <View style={{ width: '100%', padding: 10 }}>
-      
-          <ProfileBody
-            name={this.state.email}
-            //accountName="mr_peobody"
-            profileImage={require('./src/images/userProfile.png')}
-            followers="9.9/10"
-            following="35"
-            post="1"
-          />
+export default function ProfileScreen({
 
-          <ProfileButtons
-            id={0}
-            name="Mr Peobody"
-            accountName="mr_peobody"
-            profileImage={require('./src/images/userProfile.png')}
-          />
-        </View>
+  id,
+  userId,
+  email,
+  name,
+  lastName,
+
+}) {
+  
+
+
+
+
+  initializeApp(firebaseConfig);
+  const user = firebase.auth().currentUser;
+  console.log(user.email);
+  console.log('Nombre1: ', name);
+
+
+
+
+
+  return (
+    <View style={{ width: '100%', height: '100%', backgroundColor: COLORS.primary }}>
+      <View style={{ width: '100%', padding: 10 }}>
         <View>
-          <Text
+          <View
             style={{
-              padding: 10,
-              letterSpacing: 1,
-              fontSize: 14,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              paddingVertical: 20,
             }}>
-              
-            Intercambios realizados
-            <Ionicons name="checkmark-circle" style={{ fontSize: 15, color: 'green', }}></Ionicons>
-           
-          </Text>
-          {/*
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={{
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-          }}>
-          {circuls}
-        </ScrollView>*/}
-        </View>
-        <Trueques></Trueques>
+            <View
+              style={{
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('../screens/src/images/ImageUser.png')}
+                style={{
+                  resizeMode: 'cover',
+                  width: 80,
+                  height: 80,
+                  borderRadius: 100,
+                  borderWidth: 0.1
 
-        {/*<BottomTabView />*/}
-      </View >
-    );
-  };
+
+                }}
+              />
+              <Text
+                style={{
+                  paddingVertical: 5,
+                  fontWeight: 'bold',
+                }}>
+                {name} <Text>{lastName}</Text>
+              </Text>
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 18 }}>1</Text>
+              <Text>Trueques</Text>
+            </View>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ fontWeight: 'bold', fontSize: 18 }}>9.9</Text>
+              <Text>Calificación</Text>
+            </View>
+          </View>
+        </View>
+        {/*
+        <ProfileBody
+          name={name}
+          //accountName="mr_peobody"
+          profileImage={require('./src/images/ImageUser.png')}
+          followers="9.9/10"
+          following="35"
+          post="1"
+          />*/}
+
+        <ProfileButtons
+          id={0}
+          name="Mr Peobody"
+          accountName="mr_peobody"
+          profileImage={require('./src/images/userProfile.png')}
+        />
+      </View>
+      <View>
+        <Text
+          style={{
+            padding: 10,
+            letterSpacing: 1,
+            fontSize: 14,
+          }}>
+
+          Mis productos
+          <Ionicons name="checkmark-circle" style={{ fontSize: 15, color: 'green', }}></Ionicons>
+
+        </Text>
+
+      </View>
+      <ScrollView style={{ backgroundColor: COLORS.green }} showsVerticalScrollIndicator={false}>
+
+        <InventoryScreen></InventoryScreen>
+      </ScrollView>
+    </View >
+  );
 };
 
 

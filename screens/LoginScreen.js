@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, StatusBar, Dimensions, FlatList, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
+import {  StyleSheet, View, Image, Text, TouchableOpacity, Alert } from 'react-native';
 
 
 import FormInput from '../components/FormInput';
@@ -7,8 +7,7 @@ import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 import { firebaseConfig } from '../firebase-cometchat/firebase';
 
-import { useNavigation } from '@react-navigation/native';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase-cometchat/firebase';
+import {  signInWithEmailAndPassword} from '../firebase-cometchat/firebase';
 
 import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
 import { initializeApp } from 'firebase/app';
@@ -38,6 +37,7 @@ const LoginScreen1 = ({ navigation }) => {
          console.log(error)
       })
    }
+   
 
 
 

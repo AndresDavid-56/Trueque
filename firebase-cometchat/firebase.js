@@ -26,6 +26,7 @@ import {
   arrayUnion,
   arrayRemove,
   updateDoc,
+  where
   
 } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage';
@@ -43,7 +44,7 @@ export const firebaseConfig = {
 };
 const provider = new GoogleAuthProvider();
 
-const app=initializeApp(firebaseConfig);
+export const app=initializeApp(firebaseConfig);
 export const database=getFirestore(app);
 export const storage=getStorage(app);
 
@@ -77,5 +78,6 @@ export {
   arrayUnion,
   arrayRemove,
   updateDoc,
+  where
 
 }
