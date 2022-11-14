@@ -8,8 +8,8 @@ import {
   TextInput,
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import firebase from 'firebase/compat';
-import { initializeApp } from 'firebase/compat';
+import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
 import { firebaseConfig,doc,database,updateDoc } from '../firebase-cometchat/firebase';
 import FormButton from '../components/FormButton';
 
@@ -25,7 +25,8 @@ export default function EditProfile({
   lastName,
 
 }) {
-  initializeApp(firebaseConfig);
+  
+  firebase.initializeApp(firebaseConfig);
   const [nombre, setNombre] = React.useState('');
   const [apellido, setApellido] = React.useState('');
 
@@ -40,7 +41,7 @@ export default function EditProfile({
   }
 
   
-  const user = firebase.auth().currentUser
+  //const user = firebase.auth().currentUser
 
 
 

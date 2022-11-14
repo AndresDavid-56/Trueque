@@ -33,6 +33,7 @@ const SignupScreen = ({ navigation }) => {
             .then((userCredential) => {
                 console.log('¡Cuenta creada exitosamente!')
                 const user = userCredential.user;
+                auth.currentUser.displayName=name
                 const Users = async () => {
                     await addDoc(collection(database, 'users'), {
                         userId: user.uid,
@@ -70,6 +71,7 @@ const SignupScreen = ({ navigation }) => {
             .then((result) => {
                 const user = result.user
                 console.log(user)
+                
             })
             .catch((error) => console.log(error)
 

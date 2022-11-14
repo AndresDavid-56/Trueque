@@ -5,9 +5,9 @@ import ProfileBody from '../components/ProfileBody';
 import InventoryScreen from './InventoryScreen';
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView } from 'react-native';
-import firebase from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 import { collection, database, firebaseConfig } from '../firebase-cometchat/firebase';
-import { initializeApp } from 'firebase/compat';
+import { initializeApp } from 'firebase/app';
 
 import EditProfile from './EditProfile';
 import InfProfile from '../components/InfProfile';
@@ -30,10 +30,10 @@ export default function ProfileScreen({
 
 
 
-  initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
   const user = firebase.auth().currentUser;
-  console.log(user.email);
-  console.log('Nombre1: ', name);
+//  console.log(user.email);
+//  console.log('Nombre1: ', name);
 
 
 

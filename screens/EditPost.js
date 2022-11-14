@@ -10,8 +10,8 @@ import {
   useWindowDimensions
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import firebase from 'firebase/compat';
-import { initializeApp } from 'firebase/compat';
+import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
 import { firebaseConfig,doc,database,updateDoc } from '../firebase-cometchat/firebase';
 import FormButton from '../components/FormButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -50,12 +50,12 @@ export default function EditPost({
       desc: descr
 
     })
-  }
+  };
 
-  initializeApp(firebaseConfig);
-  const user = firebase.auth().currentUser
-  const navigation=useNavigation()
-
+  firebase.initializeApp(firebaseConfig);
+  //const user = firebase.auth().currentUser;
+  //const navigation=useNavigation();
+ 
 
 
 

@@ -82,9 +82,9 @@ const UserList = ({ navigation }) => {
         }}
         showsVerticalScrollIndicator={false}
       >
-        {users.map((user, index) => (
+       {users.map((user, index) => (
           <User user={user} key={index} navigation={navigation} />
-        ))}
+        ))} 
       </ScrollView>
     </Overlay>
   )
@@ -93,11 +93,11 @@ const UserList = ({ navigation }) => {
 const User = ({ navigation, user }) => {
   const handleNavigation = () => {
     navigation.navigate('ChatScreen', {
-      id: user.uid,
+      id: user.id,
       name: user.name,
-      avatar: user.avatar,
     })
     setGlobalState('showUsers', false)
+    console.log("holaa", user.uid, "sd ", user.name);
   }
 
   return (
@@ -109,6 +109,7 @@ const User = ({ navigation, user }) => {
         marginTop: 20,
       }}
       onPress={handleNavigation}
+      
     >
       <View>
         <Avatar

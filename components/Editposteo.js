@@ -4,7 +4,7 @@ import { database, collection, onSnapshot, orderBy, query, where, firebaseConfig
 import InventoryProduct from '../components/InventoryProduct';
 import { View } from 'react-native';
 import { initializeApp } from 'firebase/app';
-import firebase from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 import EditPost from '../screens/EditPost';
 import { documentId } from 'firebase/firestore';
 import { getIdToken } from 'firebase/auth';
@@ -12,11 +12,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
-
-
 export const Editposteo = ({route,navigation}) => {
     const [invproducts, setinvProducts] = React.useState([]);
-    initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const user = firebase.auth().currentUser;
     console.log(user.email);
     const { itemId } = route.params;

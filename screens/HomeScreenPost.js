@@ -21,7 +21,7 @@ export default function HomeScreenPost() {
                     desc: doc.data().desc,
                     postImg: doc.data().postImg,
                     postTime: doc.data().postTime,
-                    timestamp:doc.data().timestamp,
+                    timestamp:doc.data().timestamp,            
 
                 }))
             );

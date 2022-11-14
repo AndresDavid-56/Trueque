@@ -9,7 +9,9 @@ import { firebaseConfig } from '../firebase-cometchat/firebase';
 
 import {  signInWithEmailAndPassword} from '../firebase-cometchat/firebase';
 
-import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
+import { createUserWithEmailAndPassword,addDoc,collection } from '../firebase-cometchat/firebase';
+
+import { provider, signInWithPopup, database ,getAuth } from '../firebase-cometchat/firebase'
 import { initializeApp } from 'firebase/app';
 const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
@@ -53,6 +55,18 @@ const LoginScreen1 = ({ navigation }) => {
          .then((result) => {
             const user = result.user
             console.log(user)
+            navigation.navigate('AppStack');
+            //agrega usuario a firestore
+            const Users = async () => {
+               await addDoc(collection(database, 'users'), {
+                   userId: user.uid,
+                   email: user.email,
+                   name: user.displayName,
+                   lastName: "",
+                   createdAt: new Date(),
+               });
+           }
+           Users();
          })
          .catch((error) => console.log(error))
    }

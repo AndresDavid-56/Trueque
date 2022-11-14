@@ -26,7 +26,7 @@ const Header = ({ navigation, route }) => (
     style={[styles.flexify, { paddingHorizontal: 15, paddingVertical: 25 }]}
   >
     <TouchableOpacity onPress={() => navigation.goBack()} activeOpacity={0.5}>
-      <Icon name="arrow-left" size={18} color="white" />
+      <Icon name="arrow-left" size={18} color="black" />
     </TouchableOpacity>
 
     <View style={[styles.flexify, { flex: 1, marginLeft: 15 }]}>
@@ -38,7 +38,7 @@ const Header = ({ navigation, route }) => (
         />
         <Text
           style={{
-            color: 'white',
+            color: 'black',
             fontWeight: 600,
             marginLeft: 10,
             textTransform: 'capitalize',
@@ -48,7 +48,7 @@ const Header = ({ navigation, route }) => (
         </Text>
       </View>
 
-      <View style={styles.flexify}>
+      {/* <View style={styles.flexify}>
         <TouchableOpacity activeOpacity={0.5} style={{ marginRight: 25 }}>
           <Icon name="video" size={18} color="white" />
         </TouchableOpacity>
@@ -56,7 +56,7 @@ const Header = ({ navigation, route }) => (
         <TouchableOpacity activeOpacity={0.5}>
           <Icon name="phone-alt" size={18} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   </View>
 )
@@ -91,6 +91,9 @@ const MessageContainer = ({ route }) => {
   }
 
   const getMessages = () => {
+
+    console.log("hola", location.pathname);
+
     let UID = route.params.id
     let limit = 30
     let messagesRequest = new CometChat.MessagesRequestBuilder()
@@ -161,7 +164,7 @@ const MessageContainer = ({ route }) => {
             paddingVertical: 5,
             paddingHorizontal: 7,
             borderRadius: 50,
-            backgroundColor: '#122643',
+            backgroundColor: '#fffaf2',
           }}
           activeOpacity={0.5}
         >
@@ -281,7 +284,7 @@ export default ChatScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#122643',
+    backgroundColor: '#fffaf2',
   },
   flexify: {
     flexDirection: 'row',

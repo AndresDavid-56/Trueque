@@ -32,7 +32,7 @@ const HomeHeader = () => {
   return (
     <View style={{ paddingVertical: 15, paddingHorizontal: 30 }}>
       <View style={styles.container}>
-        <TouchableOpacity onPress={signOutUser} activeOpacity={0.5}>
+        <TouchableOpacity activeOpacity={0.5}>
           <Avatar
             rounded
             source={{
@@ -48,13 +48,13 @@ const HomeHeader = () => {
             alignItems: 'center',
           }}
         >
-          <TouchableOpacity style={{ marginRight: 15 }} activeOpacity={0.5}>
+          {/* <TouchableOpacity style={{ marginRight: 15 }} activeOpacity={0.5}>
             <Icon name="search" size={18} color="white" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
 
-      <Text h4 style={{ color: 'white', marginTop: 15 }}>
+      <Text h4 style={{ color: 'black', marginTop: 15 }}>
         Mensajes
       </Text>
     </View>
