@@ -4,12 +4,16 @@ import { Ionicons } from "@expo/vector-icons";
 import FormButton from "../components/FormButton";
 import moment from "moment";
 
-import { database } from "../firebase-cometchat/firebase";
+import firebase from 'firebase/compat/app';
+import { database,firebaseConfig } from "../firebase-cometchat/firebase";
 import {collection, onSnapshot, orderBy, query} from 'firebase/firestore'
 import { provider, signInWithPopup, getAuth } from '../firebase-cometchat/firebase'
 import Product from "../components/Product";
 
 // temporary data until we pull from Firebase
+
+firebase.initializeApp(firebaseConfig);
+
 const posts = [
     {
         id: "1",
@@ -53,11 +57,11 @@ const posts = [
 
 export default class HomeScreen1 extends React.Component {
 
-   state={email:"",displayName:""};
+   state={email:"",name:""};
    componentDidMount(){
 
-    const{email,displayName}=firebase.auth().currentUser;
-    this.setState({email,displayName});
+    const{email,name}=firebase.auth().currentUser;
+    this.setState({email,name});
     
    }
    

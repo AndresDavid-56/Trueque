@@ -5,7 +5,7 @@ import FormInput from '../components/FormInput';
 import SocialButton from '../components/SocialButton';
 import { firebaseConfig } from '../firebase-cometchat/firebase';
 
-import { getAuth, createUserWithEmailAndPassword,addDoc,collection } from '../firebase-cometchat/firebase';
+import { getAuth, createUserWithEmailAndPassword, addDoc, collection } from '../firebase-cometchat/firebase';
 
 import { provider, signInWithPopup, database } from '../firebase-cometchat/firebase'
 import { initializeApp } from 'firebase/app';
@@ -29,31 +29,36 @@ const SignupScreen = ({ navigation }) => {
 
 
     const handleCreateAccount = () => {
-        createUserWithEmailAndPassword(auth, email, password, name, lastName)
-            .then((userCredential) => {
-                console.log('¡Cuenta creada exitosamente!')
-                const user = userCredential.user;
-                const Users = async () => {
-                    await addDoc(collection(database, 'users'), {
-                        userId: user.uid,
-                        email: user.email,
-                        name: name,
-                        lastName: lastName,
-                        createdAt: new Date(),
-                    });
-                }
-                Users();
+        if (!name || !email || !password || !lastName) {
+            alert('Todos los campos deben ser llenados')
+        } else {
+            createUserWithEmailAndPassword(auth, email, password, name, lastName)
+                .then((userCredential) => {
+                    console.log('¡Cuenta creada exitosamente!')
+                    const user = userCredential.user;
+                    auth.currentUser.displayName = name
+                    const Users = async () => {
+                        await addDoc(collection(database, 'users'), {
+                            userId: user.uid,
+                            email: user.email,
+                            name: name,
+                            lastName: lastName,
+                            createdAt: new Date(),
+                        });
+                    }
+                    Users();
 
-                console.log(user)
-                Alert.alert('¡Cuenta creada exitosamente!')
+                    console.log(user)
+                    alert('¡Cuenta creada exitosamente!')
 
-            })
-            .catch(error => {
-                console.log(error)
-                Alert.alert(error.message)
-            })
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert('Lo sentimos, debes rellenar los campos con información válida');
+                })
+        }
     }
-    
+
 
 
 
@@ -70,6 +75,7 @@ const SignupScreen = ({ navigation }) => {
             .then((result) => {
                 const user = result.user
                 console.log(user)
+
             })
             .catch((error) => console.log(error)
 
@@ -88,6 +94,7 @@ const SignupScreen = ({ navigation }) => {
                 autoCapitalize="none"
                 autoCorrect={false}
             />
+
             <FormInput
                 labelValue={lastName}
                 onChangeText={(lastName) => setLastName(lastName)}
@@ -102,7 +109,7 @@ const SignupScreen = ({ navigation }) => {
                 labelValue={email}
                 onChangeText={(userEmail) => setEmail(userEmail)}
                 placeholderText="Email"
-                iconType="email"
+                iconType="mail"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -114,6 +121,8 @@ const SignupScreen = ({ navigation }) => {
                 iconType="lock"
                 secureTextEntry={true}
             />
+            <View>
+            <Text style={{marginRight:150}}>(Mínimo 6 caracteres)</Text></View>
 
             <FormButton
                 buttonTitle="Crear Cuenta"

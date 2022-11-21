@@ -1,16 +1,15 @@
 import React from 'react';
-import { View, Text, Image} from 'react-native';
+import { View, Text, Image, ScrollView} from 'react-native';
 import { ProfileButtons } from '../components/ProfileBody';
 import ProfileBody from '../components/ProfileBody';
 import InventoryScreen from './InventoryScreen';
 import { Ionicons } from "@expo/vector-icons";
-import { ScrollView } from 'react-native';
-import firebase from 'firebase/compat';
-import { collection, database, firebaseConfig } from '../firebase-cometchat/firebase';
-import { initializeApp } from 'firebase/compat';
+import firebase from 'firebase/compat/app';
 
-import EditProfile from './EditProfile';
-import InfProfile from '../components/InfProfile';
+
+import { collection, database, firebaseConfig } from '../firebase-cometchat/firebase';
+import { initializeApp } from 'firebase/app';
+
 
 
 const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
@@ -25,21 +24,23 @@ export default function ProfileScreen({
   lastName,
 
 }) {
-  
 
 
 
 
-  initializeApp(firebaseConfig);
+
+  firebase.initializeApp(firebaseConfig);
   const user = firebase.auth().currentUser;
-  console.log(user.email);
-  console.log('Nombre1: ', name);
+  //  console.log(user.email);
+  //  console.log('Nombre1: ', name);
 
 
 
 
 
   return (
+
+
     <View style={{ width: '100%', height: '100%', backgroundColor: COLORS.primary }}>
       <View style={{ width: '100%', padding: 10 }}>
         <View>
@@ -75,11 +76,11 @@ export default function ProfileScreen({
               </Text>
             </View>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 18 }}>1</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 18 }}>0</Text>
               <Text>Trueques</Text>
             </View>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontWeight: 'bold', fontSize: 18 }}>9.9</Text>
+              <Text style={{ fontWeight: 'bold', fontSize: 18 }}>0</Text>
               <Text>Calificación</Text>
             </View>
           </View>
@@ -115,9 +116,15 @@ export default function ProfileScreen({
         </Text>
 
       </View>
-      <ScrollView style={{ backgroundColor: COLORS.green }} showsVerticalScrollIndicator={false}>
+      <ScrollView style={{ flex: 1}} pagingEnabled={true}>
 
-        <InventoryScreen></InventoryScreen>
+
+        <ScrollView style={{ backgroundColor: COLORS.green, flex:1}} >
+
+
+          <InventoryScreen></InventoryScreen>
+
+        </ScrollView>
       </ScrollView>
     </View >
   );

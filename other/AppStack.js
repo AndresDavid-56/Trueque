@@ -15,12 +15,15 @@ import { initializeApp } from 'firebase/app';
 import { firebaseConfig, getAuth, signOut } from '../firebase-cometchat/firebase';
 import Editposteo from '../components/Editposteo';
 
+import HomeScreen from '../screens/Home';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app);
+
 
 
 export const FeedStack = ({ navigation }) => (
@@ -176,7 +179,7 @@ const AppStack = ({navigation}) => {
       />
       <Tab.Screen
         name="Mensajes"
-        component={MessagesScreen}
+        component={HomeScreen}
         options={({ route }) => ({
           tabBarVisible: getTabBarVisibility(route),
           tabBarIcon: ({ color, size }) => (

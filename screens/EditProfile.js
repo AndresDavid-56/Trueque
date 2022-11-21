@@ -8,9 +8,9 @@ import {
   TextInput,
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import firebase from 'firebase/compat';
-import { initializeApp } from 'firebase/compat';
-import { firebaseConfig,doc,database,updateDoc } from '../firebase-cometchat/firebase';
+import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig, doc, database, updateDoc } from '../firebase-cometchat/firebase';
 import FormButton from '../components/FormButton';
 
 
@@ -25,22 +25,33 @@ export default function EditProfile({
   lastName,
 
 }) {
-  initializeApp(firebaseConfig);
+
+  firebase.initializeApp(firebaseConfig);
   const [nombre, setNombre] = React.useState('');
   const [apellido, setApellido] = React.useState('');
 
 
-  const onEdit = () => {
-    const docRef = doc(database, "users", id);
-    updateDoc(docRef, {
-      name: nombre,
-      lastName: apellido
 
-    })
+
+
+  const onEdit = () => {
+
+    if (!nombre || !apellido) {
+
+      alert('Algunos campos que proporcionaste se encuentran vacíos');
+
+    } else {
+      const docRef = doc(database, "users", id);
+      updateDoc(docRef, {
+        name: nombre,
+        lastName: apellido
+
+      })
+    }
   }
 
-  
-  const user = firebase.auth().currentUser
+
+  //const user = firebase.auth().currentUser
 
 
 

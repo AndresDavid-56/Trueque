@@ -1,15 +1,21 @@
 import * as React from 'react';
 import * as RN from 'react-native';
-import { database,collection, onSnapshot,orderBy,query } from '../firebase-cometchat/firebase';
-
+import { database,collection, onSnapshot,orderBy,query, where,firebaseConfig } from '../firebase-cometchat/firebase';
+import firebase from 'firebase/compat';
 import Product from '../components/Product';
 
 export default function HomeScreenPost() {
     const [products, setProducts] = React.useState([]);
+    firebase.initializeApp(firebaseConfig);
+    const user=firebase.auth().currentUser;
+    
+    
 
     React.useEffect(() => {
         const collectionRef = collection(database, 'products');
-        const q = query(collectionRef, orderBy('postTime', 'desc'));
+        //const q1 = query(collectionRef,where("userName","!=", user.email ));
+        const q=query(collectionRef,orderBy('postTime','desc'));
+        
 
         const unsuscribe = onSnapshot(q, querySnapshot => {
             setProducts(
@@ -21,12 +27,11 @@ export default function HomeScreenPost() {
                     desc: doc.data().desc,
                     postImg: doc.data().postImg,
                     postTime: doc.data().postTime,
-                    timestamp:doc.data().timestamp,
+                    timestamp:doc.data().timestamp,            
 
                 }))
             );
         })
-        console.log("aquí:",products)
         return unsuscribe;
     },[])
 

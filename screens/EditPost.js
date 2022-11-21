@@ -10,9 +10,9 @@ import {
   useWindowDimensions
 } from 'react-native';
 import Ionic from 'react-native-vector-icons/Ionicons';
-import firebase from 'firebase/compat';
-import { initializeApp } from 'firebase/compat';
-import { firebaseConfig,doc,database,updateDoc } from '../firebase-cometchat/firebase';
+import firebase from 'firebase/compat/app';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig, doc, database, updateDoc } from '../firebase-cometchat/firebase';
 import FormButton from '../components/FormButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import FormInput from '../components/FormInput';
@@ -29,14 +29,14 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function EditPost({
 
-    id,
-    userId,
-      userName,
-      titulo,
-      desc,
-      postImg,
-      postTime,
-      timestamp,
+  id,
+  userId,
+  userName,
+  titulo,
+  desc,
+  postImg,
+  postTime,
+  timestamp,
 
 }) {
   const [titulos, setTitulo] = React.useState('');
@@ -44,17 +44,24 @@ export default function EditPost({
 
 
   const onEdit = () => {
-    const docRef = doc(database, "products", id);
-    updateDoc(docRef, {
-      titulo: titulos,
-      desc: descr
+    if (!titulos || !descr) {
+      alert('Todos los campos deben ser llenados con nueva información o rellenados con la misma');
+    } else {
+      const docRef = doc(database, "products", id);
+      updateDoc(docRef, {
+        titulo: titulos,
+        desc: descr
 
-    })
-  }
+      })
+      alert('¡Tu producto ha sido modificado con éxito!')
 
-  initializeApp(firebaseConfig);
-  const user = firebase.auth().currentUser
-  const navigation=useNavigation()
+    }
+
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  //const user = firebase.auth().currentUser;
+  //const navigation=useNavigation();
 
 
 
@@ -65,61 +72,61 @@ export default function EditPost({
     <KeyboardAwareScrollView>
 
       <View style={styles.container}>
-        
 
-          <View style={{ paddingVertical: 20 }}>
 
-            {/*<Image source={null}
+        <View style={{ paddingVertical: 20 }}>
+
+          {/*<Image source={null}
               resizeMode="contain"
               style={{ width, height: width }}>
   </Image>*/}
-            <Text style={styles.heading}>¡Editemos tu producto!</Text>
-            <FormInput placeholder="Nombre del producto"
-              multiline
-              numberOfLines={4}
-              iconType="camera"
-              defaultValue={titulo}
-              onChangeText={(content) => setTitulo(content)}>
-            </FormInput>
-            <FormInput placeholder="Describe el Producto"
-              multiline
-              numberOfLines={4}
-              iconType="form"
-              defaultValue={desc}
-              
-              onChangeText={(content) => setDesc(content)}>
-            </FormInput>
-            <SubmitBtn onPress={onEdit}>
-              <SubmitBtnText>Editar</SubmitBtnText>
-            </SubmitBtn>
-          </View>
+          <Text style={styles.heading}>¡Editemos tu producto!</Text>
+          <FormInput placeholder="Nombre del producto"
+            multiline
+            numberOfLines={4}
+            iconType="camera"
+            defaultValue={titulo}
+            onChangeText={(content) => setTitulo(content)}>
+          </FormInput>
+          <FormInput placeholder="Describe el Producto"
+            multiline
+            numberOfLines={4}
+            iconType="form"
+            defaultValue={desc}
+
+            onChangeText={(content) => setDesc(content)}>
+          </FormInput>
+          <SubmitBtn onPress={onEdit}>
+            <SubmitBtnText>Editar</SubmitBtnText>
+          </SubmitBtn>
+        </View>
       </View>
     </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      justifyContent: "center",
-      paddingTop: Constants.statusBarHeight,
-      backgroundColor: COLORS.primary,
-      padding: 8,
-    },
-  
-    row: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "space-around",
-      flexDirection: "row",
-    },
-    uploadProgressContainer: {
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    heading: {
-      margin: 20,
-      fontSize: 18,
-      fontWeight: "bold",
-    },
-  });
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: COLORS.primary,
+    padding: 8,
+  },
+
+  row: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "space-around",
+    flexDirection: "row",
+  },
+  uploadProgressContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  heading: {
+    margin: 20,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});

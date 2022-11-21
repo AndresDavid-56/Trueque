@@ -8,8 +8,8 @@ const HomeScreen1 = ({ navigation }) => {
         <SafeAreaView style={styles.container}>
             <HomeHeader />
             <ChatContainer navigation={navigation} />
-            <FloatingButton />
-            <UserList navigation={navigation} />
+            {/* <FloatingButton />
+            <UserList navigation={navigation} /> */}
         </SafeAreaView>
     )
 }
@@ -17,6 +17,6 @@ export default HomeScreen1
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#122643',
+        backgroundColor: '#fffaf2',
     },
 })

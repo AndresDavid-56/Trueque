@@ -22,6 +22,7 @@ import {
 } from './styles/AddPost';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS } from '../components/ProfileBody';
+import { RefreshControl } from 'react-native';
 
 
 
@@ -84,20 +85,21 @@ const AddPostScreen = ({ navigation }) => {
     console.log('Titulo: ', titulo);
     console.log('Descripción: ', desc);
 
-    //Conexión firebase con db products
-
-
-
-
-    await addDoc(collection(database, 'products'), {
-      userId: user.uid,
-      userName: user.email,
-      titulo: titulo,
-      desc: desc,
-      postImg: imageUrl,
-      postTime: new Date(),
-      timestamp: new Date().getTime(),
-    });
+    if (!imageUrl || !titulo || !desc) {
+      alert('Todos los campos deben ser llenados con información válida');
+    } else {
+      //Conexión firebase con db products
+      await addDoc(collection(database, 'products'), {
+        userId: user.uid,
+        userName: user.email,
+        titulo: titulo,
+        desc: desc,
+        postImg: imageUrl,
+        postTime: new Date(),
+        timestamp: new Date().getTime(),
+      });
+      alert('¡Tu producto ha sido publicado con éxito!');
+    }
 
 
 
@@ -142,7 +144,7 @@ const AddPostScreen = ({ navigation }) => {
 
         {isUploading && (
           <View style={styles.uploadProgressContainer}>
-            <Text> Progreso {progress} of 100% </Text>
+            <Text> Progreso {progress} de 100% </Text>
           </View>
         )}
 
@@ -168,8 +170,11 @@ const AddPostScreen = ({ navigation }) => {
               value={desc}
               onChangeText={(content) => setDesc(content)}>
             </FormInput>
-            <SubmitBtn onPress={submitPost}>
-              <SubmitBtnText>Publicar</SubmitBtnText>
+            <SubmitBtn onPress={submitPost} >
+
+              
+              <SubmitBtnText>Publicar </SubmitBtnText>
+              
             </SubmitBtn>
           </View>
         )}

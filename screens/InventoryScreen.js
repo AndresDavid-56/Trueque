@@ -41,14 +41,14 @@ const InventoryScreen = () => {
 
     return (
         <>
-            <View >
-                <RN.ScrollView style={styles.feed} showsVerticalScrollIndicator={false} scrollEnabled={true}>
+            <RN.ScrollView style={{flex:1}}>
+                <RN.ScrollView style={styles.feed } scrollEnabled={true} showsVerticalScrollIndicator={true}  >
 
 
                     {invproducts.map(products => <InventoryProduct key={products.id}{...products}></InventoryProduct>)}
 
                 </RN.ScrollView>
-            </View>
+            </RN.ScrollView>
 
         </>
     )

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import { database } from '../firebase-cometchat/firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
@@ -14,6 +14,7 @@ import { useNavigation } from '@react-navigation/native';
 import Product from './Product';
 
 
+
 export default function InventoryProduct({
     id,
     userId,
@@ -26,25 +27,36 @@ export default function InventoryProduct({
 
 
 }) {
-    const navigation=useNavigation();
+    const navigation = useNavigation();
 
 
     const onDelete = () => {
-        const docRef = doc(database, 'products', id);
-        deleteDoc(docRef);
+
+        const respuesta = confirm('¿Estás seguro de eliminar tu producto?, no se podrá recuperar')
+
+        if (respuesta) {
+            const docRef = doc(database, 'products', id);
+            deleteDoc(docRef);
+            alert('¡El producto se ha eliminado con éxito!');
+        } else {
+            alert('Tu producto, no se ha eliminado');
+        }
+
     }
-    
+
 
 
     return (
-        
+
         <View style={styles.feedItem} >
-            
+
+
+
 
             <View style={{ flex: 1 }}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                     <View>
-                        
+
 
                         <Text style={styles.name}>{titulo}</Text>
 
@@ -55,7 +67,7 @@ export default function InventoryProduct({
                     <View>
                         <Ionicons onPress={onDelete} name="trash" size={26} color="#73788B" style={{ marginTop: 5 }} />
 
-                        <Ionicons onPress={() => navigation.navigate('Editposteo',{itemId:id})} name="create" size={24} color="#73788B" style={{ marginTop: 15 }} />
+                        <Ionicons onPress={() => navigation.navigate('Editposteo', { itemId: id })} name="create" size={24} color="#73788B" style={{ marginTop: 15 }} />
 
 
                     </View>

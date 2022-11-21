@@ -4,8 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import FormButton from './FormButton';
 import moment from 'moment';
 import 'moment/locale/es';
-
-
+import { useNavigation } from '@react-navigation/native';
+import firebase from 'firebase/compat';
 
 export default function Product({
     id,
@@ -16,9 +16,11 @@ export default function Product({
       postImg,
       postTime,
       timestamp,
+      userName_User
 
-}) {
-    
+}){
+
+    const navigation=useNavigation();
 
         return (
             <View style={styles.feedItem} >
@@ -34,16 +36,30 @@ export default function Product({
                     <Text style={styles.post}>{desc}</Text>
                     <Image source={{uri:postImg}} style={styles.postImage} resizeMode="contain" ></Image>
                     <Text style={styles.post}>Publicado por: {userName}</Text>
-
+                    
                     <View style={{ flexDirection: "row", paddingRight: 40 }}>
-                        <FormButton buttonTitle="Intercambiar"></FormButton>
-                        <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginLeft: 40, paddingVertical: 25 }} />
+
+                        {Boolean(firebase.auth().currentUser.email!=userName)&&
+                        <FormButton buttonTitle="Intercambiar" 
+                         onPress={() => {
+                            navigation.navigate("ChatScreen",{
+                                id: userId,
+                                name: userName})
+                        }}
+                        ></FormButton>}
+
+{/*                         <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginLeft: 40, paddingVertical: 25 }} /> */}
                     </View>
 
                 </View>
             </View>
         )
 }
+/*
+*/
+
+/*
+*/
 const styles = StyleSheet.create({
     container: {
         flex: 1,

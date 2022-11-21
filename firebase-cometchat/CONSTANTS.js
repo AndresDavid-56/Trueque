@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-    APP_ID: '222059340ed382b1',
+    APP_ID: '225104a5f2cd77ff',
     REGION: 'us',
-    Auth_Key: '8f44b97c70ff31893322325d6e8b1ee077af98e4',
+    Auth_Key: '11fe86c2c5859ab7422dd490fadba4b67ef3142e',
     }
