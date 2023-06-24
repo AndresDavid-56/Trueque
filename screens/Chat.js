@@ -33,7 +33,7 @@ const Header = ({ navigation, route }) => (
       <View style={styles.flexify}>
         <Avatar
           rounded
-          source={{ uri: route.params.avatar }}
+          // source={{ uri: route.params.avatar }}
           placeholderStyle={{ opacity: 0 }}
         />
         <Text
@@ -44,7 +44,7 @@ const Header = ({ navigation, route }) => (
             textTransform: 'capitalize',
           }}
         >
-          {route.params.name}
+          {/* {route.params.name} */}
         </Text>
       </View>
 
@@ -69,7 +69,7 @@ const MessageContainer = ({ route }) => {
   const auth = getAuth()
 
   const sendMessage = () => {
-    let receiverID = route.params.id
+    // let receiverID = route.params.id
     let messageText = message
     let receiverType = CometChat.RECEIVER_TYPE.USER
     let textMessage = new CometChat.TextMessage(
@@ -92,9 +92,9 @@ const MessageContainer = ({ route }) => {
 
   const getMessages = () => {
 
-    console.log("hola", location.pathname);
+    // console.log("hola", location.pathname);
 
-    let UID = route.params.id
+    let UID = "123"
     let limit = 30
     let messagesRequest = new CometChat.MessagesRequestBuilder()
       .setUID(UID)

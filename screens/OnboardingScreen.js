@@ -1,25 +1,32 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, StatusBar, Dimensions, FlatList, View, Image, Text, TouchableOpacity } from 'react-native';
-
+import { darkGreen } from '../components/Constants';
 const { width, height } = Dimensions.get('window');
 const COLORS = { primary: '#fffaf2', white: '#fff', black:'#000000', turquesa:'#0ffff7', green:'#88ffad',grey:'#82877c'};
 const slides = [
 
    {
       id: ' 1 ',
-      image: require("../screens/src/images/1.png"),
+      image: require("../screens/src/images/sign_up.png"),
       title: "Crea tu cuenta",
       subtitle: "¡Para mirar productos que pueden ser tuyos! ",
    },
    {
 
       id: ' 2 ',
-      image: require("../screens/src/images/2.png"),
+      image: require("../screens/src/images/add_info.png"),
+      title: 'Agrega un producto',
+      subtitle: "¡Para poder intercambiar con otro producto!",
+   },
+   {
+
+      id: ' 3 ',
+      image: require("../screens/src/images/online_posts.png"),
       title: 'Elige un producto',
       subtitle: " Para hacer TRUEQUE e intercambiar tu producto",
    },
    {
-      id: ' 3 ',
+      id: ' 4 ',
       image: require("../screens/src/images/3.png"),
       title: "¡Contacta e intercambia!",
       subtitle: " ¡Los productos que desees y cuando lo desees! ",
@@ -31,7 +38,7 @@ const Slide = ({ item }) => {
          <Image
             source={item?.image}
             // Existe un error en el emulador web, funciona al poner 400% para web, 75% para emulador móvil
-            style={{ height:'400%', width, resizeMode: 'contain'} }
+            style={{ height:'75%', width, resizeMode: 'contain'} }
          />
          <Text style={styles.title}>{item.title}</Text>
          <Text style={styles.subtitle}>{item.subtitle}</Text>
@@ -77,7 +84,7 @@ const OnboardingScreen = ({ navigation }) => {
                   currentSlideIndex == slides.length - 1 ? (
                      <View style={{ height: 50 }}>
                         <TouchableOpacity style={[styles.btn]} onPress={()=>navigation.replace("LoginScreen1")}>
-                           <Text style={{ fontWeight: 'bold', fontsize: 15, color: COLORS.black }} >
+                           <Text style={{ fontWeight: 'bold', fontsize: 15, color: COLORS.white }} >
                               EMPEZAR
                            </Text>
                         </TouchableOpacity>
@@ -105,7 +112,7 @@ const OnboardingScreen = ({ navigation }) => {
 
                         <View style={{ width: 15 }} />
                         <TouchableOpacity style={[styles.btn]} onPress={goNextSlide}>
-                           <Text style={{ fontWeight: 'bold', fontSize: 15, color: COLORS.black }}>SIGUIENTE</Text>
+                           <Text style={{ fontWeight: 'bold', fontSize: 15, color: COLORS.white }}>SIGUIENTE</Text>
                         </TouchableOpacity>
                      </View>)
 
@@ -144,7 +151,7 @@ const OnboardingScreen = ({ navigation }) => {
 
 
    return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.primary }} >
+      <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }} >
          <StatusBar backgroundColor={COLORS.primary} />
          <FlatList
             ref={ref}
@@ -194,8 +201,8 @@ const styles = StyleSheet.create({
    btn: {
       flex: 1,
       height: 50,
-      borderRadius: 5,
-      backgroundColor: COLORS.green,
+      borderRadius: 15,
+      backgroundColor: darkGreen,
       justifyContent: 'center',
       alignItems: 'center',
    },

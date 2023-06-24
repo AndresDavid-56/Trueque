@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { darkGreen } from '../../components/Constants';
 
 export const InputWrapper = styled.View`
     flex: 1;
@@ -31,7 +32,7 @@ export const StatusWrapper = styled.View`
 export const SubmitBtn = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
-    background-color: #88ffad ;
+    background-color: darkgreen ;
     border-radius: 5px;
     padding: 10px 25px;
 `;
@@ -39,5 +40,5 @@ export const SubmitBtn = styled.TouchableOpacity`
 export const SubmitBtnText = styled.Text`
     font-size: 18px;
     font-weight: bold;
-    color: #000000;
+    color: #fff;
 `;

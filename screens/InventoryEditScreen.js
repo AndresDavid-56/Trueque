@@ -11,17 +11,20 @@ import InventoryProductEdit from '../components/InventoryProductEdit';
 
 
 
-const InventoryScreen = () => {
+const InventoryEditScreen = ({route}) => {
     const [invproducts, setinvProducts] = React.useState([]);
-    initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig);
     const user = firebase.auth().currentUser;
     console.log(user.email);
+    const { itemId } = route.params;
+    
+    console.log('ID: ',itemId);
 
 
 
     React.useEffect(() => {
         const collectionRef = collection(database, 'products');
-        const q = query(collectionRef, orderBy('postTime', 'desc'), where('userName', '==', user.email));
+        const q = query(collectionRef, where(firebase.firestore.FieldPath.documentId(), '==',itemId));
         const unsuscribe = onSnapshot(q, querySnapshot => {
             setinvProducts(
                 querySnapshot.docs.map(doc => ({
@@ -31,6 +34,7 @@ const InventoryScreen = () => {
                     titulo: doc.data().titulo,
                     desc: doc.data().desc,
                     postImg: doc.data().postImg,
+                    nameImage:doc.data().nameImage,
                     postTime: doc.data().postTime,
                     timestamp: doc.data().timestamp,
 
@@ -43,16 +47,13 @@ const InventoryScreen = () => {
 
     return (
         <>
-            <RN.ScrollView style={styles.container} showsVerticalScrollIndicator={true}>
+   
+                <RN.ScrollView >
 
 
+                    {invproducts.map(products => <InventoryProductEdit key={products.id}{...products}></InventoryProductEdit>)}
 
-                <RN.View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', backgroundColor: COLORS.white }}>
-
-                    {invproducts.map(products => <InventoryProduct key={products.id}{...products}></InventoryProduct>)}
-                </RN.View>
-            </RN.ScrollView>
-
+                </RN.ScrollView>
 
 
         </>
@@ -60,11 +61,11 @@ const InventoryScreen = () => {
 
 
 };
-export default InventoryScreen
+export default InventoryEditScreen
 const styles = RN.StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.white
+        backgroundColor: "#EBECF4"
     },
     header: {
         paddingTop: 64,

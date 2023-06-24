@@ -18,6 +18,9 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import FormInput from '../components/FormInput';
 import { SubmitBtn } from './styles/AddPost';
 import { SubmitBtnText } from './styles/AddPost';
+import FormDesc from '../components/FormDesc';
+import Field2 from '../components/Field2';
+import Field3 from '../components/Field3';
 
 
 import Constants from "expo-constants";
@@ -39,13 +42,13 @@ export default function EditPost({
   timestamp,
 
 }) {
-  const [titulos, setTitulo] = React.useState('');
-  const [descr, setDesc] = React.useState('');
+  const [titulos, setTitulo] = React.useState(titulo);
+  const [descr, setDesc] = React.useState(desc);
 
 
   const onEdit = () => {
     if (!titulos || !descr) {
-      alert('Todos los campos deben ser llenados con nueva información o rellenados con la misma');
+      alert('Algunos campos se encuentran vacíos');
     } else {
       const docRef = doc(database, "products", id);
       updateDoc(docRef, {
@@ -53,7 +56,7 @@ export default function EditPost({
         desc: descr
 
       })
-      alert('¡Tu producto ha sido modificado con éxito!')
+      alert('¡Producto Actualizado!')
 
     }
 
@@ -76,28 +79,25 @@ export default function EditPost({
 
         <View style={{ paddingVertical: 20 }}>
 
-          {/*<Image source={null}
-              resizeMode="contain"
-              style={{ width, height: width }}>
-  </Image>*/}
+          <Image source={{ uri: postImg }}
+            resizeMode="contain"
+            style={styles.postImage}>
+          </Image>
           <Text style={styles.heading}>¡Editemos tu producto!</Text>
-          <FormInput placeholder="Nombre del producto"
-            multiline
-            numberOfLines={4}
-            iconType="camera"
+          <Field2 placeholder="Nombre del producto"
+            iconType="title"
             defaultValue={titulo}
             onChangeText={(content) => setTitulo(content)}>
-          </FormInput>
-          <FormInput placeholder="Describe el Producto"
+          </Field2>
+          <Field3 placeholder="Describe el Producto"
             multiline
-            numberOfLines={4}
-            iconType="form"
+            iconType="description"
             defaultValue={desc}
 
             onChangeText={(content) => setDesc(content)}>
-          </FormInput>
+          </Field3>
           <SubmitBtn onPress={onEdit}>
-            <SubmitBtnText>Editar</SubmitBtnText>
+            <SubmitBtnText>Actualizar</SubmitBtnText>
           </SubmitBtn>
         </View>
       </View>
@@ -108,8 +108,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: COLORS.primary,
+    paddingTop: 150,
+    paddingBottom:300,
+    backgroundColor: COLORS.white,
     padding: 8,
   },
 
@@ -129,4 +130,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  postImage: {
+    width: undefined,
+    height: 300,
+    borderRadius: 5,
+    marginVertical: 5
+}
 });

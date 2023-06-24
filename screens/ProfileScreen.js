@@ -1,18 +1,26 @@
 import React from 'react';
-import { View, Text, Image, ScrollView} from 'react-native';
+import { Dimensions } from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import { ProfileButtons } from '../components/ProfileBody';
 import ProfileBody from '../components/ProfileBody';
 import InventoryScreen from './InventoryScreen';
 import { Ionicons } from "@expo/vector-icons";
 import firebase from 'firebase/compat/app';
+import FavoritesScreen from './FavoritesScreen';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import BottomTabView from '../components/BottomTabView';
+
 
 
 import { collection, database, firebaseConfig } from '../firebase-cometchat/firebase';
 import { initializeApp } from 'firebase/app';
+import { func } from 'prop-types';
 
 
 
-const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
+const COLORS = { primary: '#5379a4', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
 
 export default function ProfileScreen({
@@ -33,6 +41,28 @@ export default function ProfileScreen({
   const user = firebase.auth().currentUser;
   //  console.log(user.email);
   //  console.log('Nombre1: ', name);
+  const Tab = createMaterialTopTabNavigator();
+
+  function Prueba() {
+    return (
+      <View
+
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: 'center',
+          backgroundColor: '#03cafc',
+        }}
+
+      >
+        <Text>
+          Pruebaaa!!
+        </Text>
+
+      </View>
+    )
+  }
+
 
 
 
@@ -41,7 +71,8 @@ export default function ProfileScreen({
   return (
 
 
-    <View style={{ width: '100%', height: '100%', backgroundColor: COLORS.primary }}>
+    <View style={{ width: Dimensions.get('window').width, height: '210%', backgroundColor: COLORS.white }}>
+      
       <View style={{ width: '100%', padding: 10 }}>
         <View>
           <View
@@ -84,6 +115,8 @@ export default function ProfileScreen({
               <Text>Calificación</Text>
             </View>
           </View>
+
+
         </View>
         {/*
         <ProfileBody
@@ -111,22 +144,13 @@ export default function ProfileScreen({
           }}>
 
           Mis productos
-          <Ionicons name="checkmark-circle" style={{ fontSize: 15, color: 'green', }}></Ionicons>
+          <Ionicons name="checkmark-circle" style={{ fontSize: 15, color: 'green' }}></Ionicons>
 
         </Text>
-
       </View>
-      <ScrollView style={{ flex: 1}} pagingEnabled={true}>
-
-
-        <ScrollView style={{ backgroundColor: COLORS.green, flex:1}} >
-
-
-          <InventoryScreen></InventoryScreen>
-
-        </ScrollView>
-      </ScrollView>
+      <BottomTabView></BottomTabView>
     </View >
+
   );
 };
 

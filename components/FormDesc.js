@@ -1,10 +1,9 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { windowHeight,windowWidth } from '../utils/Dimentions';
-
 import { AntDesign, Feather, MaterialIcons } from "@expo/vector-icons";
 
-const FormInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
+const FormDesc = ({ labelValue, placeholderText, iconType, ...rest }) => {
     return (
 
         <View style={styles.inputContainer}>
@@ -22,13 +21,13 @@ const FormInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
         </View>
     );
 };
-export default FormInput;
+export default FormDesc;
 const styles = StyleSheet.create({
     inputContainer: {
         marginTop: 5,
         marginBottom: 10,
         width: '100%',
-        height: windowHeight / 15,
+        height: windowHeight / 5,
         borderColor: '#ccc',
         borderRadius: 3,
         borderWidth: 1,
@@ -57,11 +56,11 @@ const styles = StyleSheet.create({
     inputField: {
 
 
-        padding: 10,
+        padding: 5,
         marginTop: 5,
         marginBottom: 10,
         width: windowWidth / 1.5,
-        height: windowHeight / 15,
+        height: windowHeight / 1.5,
         fontSize: 16,
         borderRadius: 8,
         borderWidth: 1

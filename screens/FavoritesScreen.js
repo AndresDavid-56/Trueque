@@ -3,11 +3,11 @@ import React from 'react'
 
 import {Container}  from './styles/FeedStyles';
 
-const FavoritesScreen=()=> {
+const FavoritesScreen=({navigation})=> {
   return (
-    <Container>
-      <Text style={styles.text}> Favoritos</Text>
-    </Container>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Favoritos!</Text>
+    </View>
   );
 }
 export default FavoritesScreen

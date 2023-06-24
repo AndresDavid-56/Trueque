@@ -20,17 +20,6 @@ export const Editposteo = ({route,navigation}) => {
     const { itemId } = route.params;
     
     console.log('ID: ',itemId);
-    
-
-
-
-
-
-
-
-
-
-
 
 
         React.useEffect(() => {
@@ -59,13 +48,13 @@ export const Editposteo = ({route,navigation}) => {
 
         return (
             <>
-                <View >
-                    <RN.ScrollView style={styles.feed} showsVerticalScrollIndicator={false} scrollEnabled={true}>
+                <View style={styles.container}>
+                    <RN.View style={styles.feed} showsVerticalScrollIndicator={false} scrollEnabled={true}>
 
 
                         {invproducts.map(products => <EditPost key={products.id}{...products}></EditPost>)}
 
-                    </RN.ScrollView>
+                    </RN.View>
                 </View>
 
             </>
@@ -77,7 +66,8 @@ export const Editposteo = ({route,navigation}) => {
     const styles = RN.StyleSheet.create({
         container: {
             flex: 1,
-            backgroundColor: "#EBECF4"
+            backgroundColor: "#EBECF4",
+
         },
         header: {
             paddingTop: 64,
@@ -98,7 +88,8 @@ export const Editposteo = ({route,navigation}) => {
             fontWeight: "500"
         },
         feed: {
-            marginHorizontal: 20
+            marginHorizontal: 0,
+            height:'100%'
         },
         feedItem: {
             backgroundColor: "#FFF",

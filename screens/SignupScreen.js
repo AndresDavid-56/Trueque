@@ -1,9 +1,12 @@
 import React from 'react';
+import Field from '../components/Field';
 import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import FormButton from '../components/FormButton';
 import FormInput from '../components/FormInput';
 import SocialButton from '../components/SocialButton';
-import { firebaseConfig } from '../firebase-cometchat/firebase';
+import { firebaseConfig, updateProfile } from '../firebase-cometchat/firebase';
+import { darkGreen } from '../components/Constants';
+import Btn from '../components/Btn';
 
 import { getAuth, createUserWithEmailAndPassword, addDoc, collection } from '../firebase-cometchat/firebase';
 
@@ -13,7 +16,8 @@ import firebase from 'firebase/compat';
 
 
 
-const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
+
+const COLORS = { primary: '#5379a4', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
 
 
@@ -35,8 +39,19 @@ const SignupScreen = ({ navigation }) => {
             createUserWithEmailAndPassword(auth, email, password, name, lastName)
                 .then((userCredential) => {
                     console.log('¡Cuenta creada exitosamente!')
-                    const user = userCredential.user;
-                    auth.currentUser.displayName = name
+
+                    const user = userCredential.user
+                    updateProfile(user,{
+                        displayName:name
+                    }).then((s)=>{
+                        console.log("Perfil Modificado");
+                    })
+
+                    
+
+                
+                    
+                    
                     const Users = async () => {
                         await addDoc(collection(database, 'users'), {
                             userId: user.uid,
@@ -48,7 +63,7 @@ const SignupScreen = ({ navigation }) => {
                     }
                     Users();
 
-                    console.log(user)
+                    console.log("Usuario creado:", user)
                     alert('¡Cuenta creada exitosamente!')
 
                 })
@@ -83,7 +98,88 @@ const SignupScreen = ({ navigation }) => {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={{alignItems: 'center', width: 440, backgroundColor:darkGreen}}>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 64,
+            fontWeight: 'bold',
+            marginTop: 20,
+          }}>
+          Regístrate
+        </Text>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 19,
+            fontWeight: 'bold',
+            marginBottom: 20,
+          }}>
+          Crear una nueva cuenta
+        </Text>
+        <View
+          style={{
+            backgroundColor: 'white',
+            height: 600,
+            width: 460,
+            borderTopLeftRadius: 130,
+            paddingTop: 50,
+            alignItems: 'center',
+          }}>
+          <Field placeholder="Nombres" labelValue={name}
+                onChangeText={(userName) => setName(userName)} />
+          <Field placeholder="Apellidos" labelValue={lastName}
+                onChangeText={(lastName) => setLastName(lastName)} />
+          <Field
+            placeholder="Email"
+            keyboardType={'email-address'}
+            labelValue={email}
+                onChangeText={(userEmail) => setEmail(userEmail)}
+                autoCapitalize='none'
+          />
+          <Field placeholder="Contraseña" secureTextEntry={true} labelValue={password}
+                onChangeText={(userPassword) => setPassword(userPassword)} />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '78%',
+              paddingRight: 16
+            }}>
+         
+          </View>
+
+          <Btn
+            textColor="white"
+            bgColor={darkGreen}
+            btnLabel="Crear cuenta"
+            Press={ handleCreateAccount
+            }
+          />
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+              ¿Ya tienes una cuenta?{' '}
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('LoginScreen1')}>
+              <Text
+                style={{color: darkGreen, fontWeight: 'bold', fontSize: 16}}>
+                Inicia Sesión
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+
+
+
+        {/* <View style={styles.container}>
             <Text style={styles.text}>Crear Cuenta</Text>
             <FormInput
                 labelValue={name}
@@ -160,8 +256,8 @@ const SignupScreen = ({ navigation }) => {
                     <Text style={styles.navButtonText}>¿Ya tienes una cuenta? Inicia Sesión</Text>
                 </TouchableOpacity>
             </View>
-        </View>
-    );
+        </View> */}
+    
 };
 
 export default SignupScreen;

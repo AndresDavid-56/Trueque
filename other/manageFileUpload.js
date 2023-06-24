@@ -3,7 +3,7 @@ import "firebase/compat/storage"
 
 const manageFileUpload = async (
   fileBlob,
-  { onStart, onProgress, onComplete, onFail }
+  { onStart, onProgress, onComplete, onFail, onName }
 ) => {
 
 
@@ -15,6 +15,9 @@ const manageFileUpload = async (
    const storageRef = firebase.storage().ref(`images/${imgName}.jpg`);
 
    console.log('uploading file',imgName)
+
+   onName && onName(imgName);
+   
 
   // Create file metadata including the content type
   /** @type {any} */

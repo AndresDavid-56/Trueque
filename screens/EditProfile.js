@@ -27,8 +27,8 @@ export default function EditProfile({
 }) {
 
   firebase.initializeApp(firebaseConfig);
-  const [nombre, setNombre] = React.useState('');
-  const [apellido, setApellido] = React.useState('');
+  const [nombre, setNombre] = React.useState(name);
+  const [apellido, setApellido] = React.useState(lastName);
 
 
 
@@ -46,7 +46,9 @@ export default function EditProfile({
         name: nombre,
         lastName: apellido
 
-      })
+      }).then(
+        alert('¡Perfil actualizado!')
+      )
     }
   }
 
@@ -146,7 +148,7 @@ export default function EditProfile({
             }}
           />
           <FormButton
-            buttonTitle="Editar"
+            buttonTitle="Actualizar"
             onPress={onEdit}>
           </FormButton>
         </View>

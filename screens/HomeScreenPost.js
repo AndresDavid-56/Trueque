@@ -3,11 +3,24 @@ import * as RN from 'react-native';
 import { database,collection, onSnapshot,orderBy,query, where,firebaseConfig } from '../firebase-cometchat/firebase';
 import firebase from 'firebase/compat';
 import Product from '../components/Product';
+import { COLORS } from '../components/ProfileBody';
+const wait=(timeout)=>{
+    return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 export default function HomeScreenPost() {
     const [products, setProducts] = React.useState([]);
     firebase.initializeApp(firebaseConfig);
     const user=firebase.auth().currentUser;
+
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
+    
+
     
     
 
@@ -37,10 +50,11 @@ export default function HomeScreenPost() {
 
     return(
         <>
-        <RN.ScrollView style={styles.feed } showsVerticalScrollIndicator={false}>
+        <RN.ScrollView style={styles.container} showsVerticalScrollIndicator={true} refreshControl={<RN.RefreshControl refreshing={refreshing} onRefresh={onRefresh}></RN.RefreshControl>}>
+        <RN.View style={styles.feed } >
  
         {products.map(products => <Product key={products.id}{...products}></Product>)}
-        </RN.ScrollView>
+        </RN.View></RN.ScrollView>
         
         </>
     )
@@ -50,7 +64,8 @@ export default function HomeScreenPost() {
 const styles = RN.StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EBECF4"
+        backgroundColor: COLORS.white,
+        
     },
     header: {
         paddingTop: 64,
@@ -71,7 +86,8 @@ const styles = RN.StyleSheet.create({
         fontWeight: "500"
     },
     feed: {
-        marginHorizontal: 20
+        marginHorizontal: 0,
+        backgroundColor:COLORS.black
     },
     feedItem: {
         backgroundColor: "#FFF",

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Alert} from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,35 +9,272 @@ import ProfileB from '../components/ProfileB';
 import InfProfile from '../components/InfProfile';
 import MessagesScreen from '../screens/MessagesScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import AddPostScreen from '../screens/AddPostScreen';
+import AddPostScreen, { handleLocalImageUpload } from '../screens/AddPostScreen';
 import HomeScreenPost from '../screens/HomeScreenPost';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig, getAuth, signOut } from '../firebase-cometchat/firebase';
 import Editposteo from '../components/Editposteo';
+import { COLORS } from '../components/ProfileBody';
+import InventoryProductEdit from '../components/InventoryProductEdit';
+import InventoryEditScreen from '../screens/InventoryEditScreen';
+import ChatsScreen from '../screens/ChatsScreen';
+import AddChatScreen from '../screens/AddChatScreen';
+import { darkGreen } from '../components/Constants';
+
+
 
 import HomeScreen from '../screens/Home';
+import ChatsScreen1 from '../screens/ChatsScreen1';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const COLORS = { primary: '#fffaf2', white: '#fff', black: '#000000', turquesa: '#0ffff7', green: '#88ffad', grey: '#82877c' };
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app);
 
+function ProfileGroupScreen({ navigation }) {
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        console.log('¡Sesión Cerrada exitosamente!')
+        navigation.navigate('LoginScreen1');
+        Alert.alert('¡Sesión Cerrada exitosame!')
+
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="PerfilInventario" component={ProfileB} options={{
+        headerLeft: null,
+        headerTitle: 'Perfil',
+
+        headerRight: () => (
+          <View style={{ marginRight: 15 }}>
+            <Ionic
+              name="log-out-outline"
+              size={24}
+              backgroundColor="#fff"
+              color={COLORS.white}
+              onPress={handleSignOut}
+            />
+          </View>
+
+        ),
+        headerTitleStyle: {
+          color: COLORS.white,
+
+          fontSize: 18,
+        },
+        headerStyle: {
+          backgroundColor: darkGreen
+        },
+
+      }} />
+      <Stack.Screen
+        //Editar Perfil!
+        name="InventoryEditScreen"
+        component={InventoryEditScreen}
+        options={{
+          title: 'Producto Seleccionado',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: COLORS.white,
+            fontSize: 18,
+          },
+          headerStyle: {
+            backgroundColor: darkGreen
+          },
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+            <View style={{ marginLeft: 15 }}>
+              <TouchableOpacity onPress={() => navigation.navigate('PerfilInventario')}>
+                <Ionic name="close-outline" style={{ fontSize: 35, color: COLORS.white }} />
+              </TouchableOpacity>
+            </View>
+
+          ),
+        }}
+      />
+      <Stack.Screen
+        //Editar Perfil!
+        name="EditProfile"
+        component={InfProfile}
+        options={{
+          title: 'Editar Perfil',
+          headerTitleAlign: 'center',
+          headerTitleStyle: {
+            color: COLORS.white,
+
+          },
+
+
+          headerStyle: {
+            backgroundColor: darkGreen,
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+
+
+          headerBackTitleVisible: false,
+          headerLeft: () => (
+
+            <View style={{ marginLeft: 15 }}>
+              <TouchableOpacity onPress={() => navigation.navigate('PerfilInventario')}>
+                <Ionic name="close-outline" style={{ fontSize: 35, color: COLORS.white }} />
+              </TouchableOpacity>
+            </View>
+
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Editposteo"
+        component={Editposteo}
+        options={{
+          title: 'Editar Producto',
+          headerTitleAlign: 'center',
+          presentation: 'modal',
+          headerTitleStyle: {
+            color: COLORS.white,
+            fontSize: 18,
+          },
+          headerStyle: {
+            backgroundColor: darkGreen,
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <View style={{ marginLeft: 15 }}>
+              <TouchableOpacity onPress={() => navigation.navigate('PerfilInventario')}>
+                <Ionic name="arrow-back-outline" style={{ fontSize: 35, color: COLORS.white }} />
+              </TouchableOpacity>
+            </View>
+
+          )
+
+
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+function ChatGroupScreen({ navigation }) {
+
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="ChatsScreen"
+        component={ChatsScreen}
+        options={{
+          title: 'Chats',
+          headerTitleAlign: 'center',
+          headerBack: false,
+          headerTitleStyle: {
+            color: COLORS.white,
+
+          },
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <View style={{ marginLeft: 15 }}>
+              <Ionic
+                name=""
+                size={24}
+                backgroundColor="#fff"
+              />
+            </View>
+
+          ),
+        }}
+
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name="MessagesScreen"
+        component={MessagesScreen}
+        options={{
+          title: 'Chat',
+          headerTitleAlign: 'center',
+          headerBack: false,
+          headerTitleStyle: {
+            color: COLORS.white,
+
+          },
+          headerLeft: () => (
+            <View style={{ marginLeft: 15 }}>
+              <TouchableOpacity onPress={() => navigation.navigate('PerfilInventario')}>
+                <Ionic name="arrow-back-outline" style={{ fontSize: 35, color: COLORS.white }} />
+              </TouchableOpacity>
+            </View>
+
+          ),
+          headerStyle: {
+            backgroundColor: darkGreen,
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          
+        }}
+      >
+      </Stack.Screen>
+      <Stack.Screen
+        name="AddChat"
+        component={AddChatScreen}
+        options={{
+          title: 'Mensajes',
+          headerTitleAlign: 'center',
+          headerBack: false,
+          headerTitleStyle: {
+            color: COLORS.white,
+
+          },
+          headerStyle: {
+            backgroundColor: COLORS.primary,
+            shadowColor: '#fff',
+            elevation: 0,
+          },
+          headerLeft: () => (
+            <View style={{ marginLeft: 15 }}>
+              <Ionic
+                name=""
+                size={24}
+                backgroundColor="#fff"
+              />
+            </View>
+
+          ),
+        }}
+      >
+      </Stack.Screen>
+
+    </Stack.Navigator>
+  )
+}
+
 
 
 export const FeedStack = ({ navigation }) => (
-  
+
   <Stack.Navigator>
     <Stack.Screen
       name="TRUEQUE"
-      
+
       component={HomeScreenPost}
 
+
       options={{
+
         headerTitleAlign: 'center',
+
         headerTitleStyle: {
-          color: COLORS.black,
+          color: COLORS.white,
 
           fontSize: 18,
         },
@@ -45,6 +282,9 @@ export const FeedStack = ({ navigation }) => (
         headerStyle: {
           shadowColor: '#000000',
           elevation: 4,
+          backgroundColor: darkGreen,
+          borderBottomEndRadius:15,
+          borderBottomStartRadius:15
         },
         headerLeft: () => (
           <View style={{ marginLeft: 15 }}>
@@ -84,55 +324,17 @@ export const FeedStack = ({ navigation }) => (
           backgroundColor: '#fff',
           shadowColor: '#fff',
           elevation: 0,
+          borderBottomEndRadius:15,
+          borderBottomStartRadius:15
         },
 
-      }}
-    />
-    <Stack.Screen
-      name="Editposteo"
-      component={Editposteo}
-      options={{
-        title: '',
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: '#fff',
-          shadowColor: '#fff',
-          elevation: 0,
-        },
-      }}
-    />
-    
-    <Stack.Screen
-    //Editar Perfil!
-      name="EditProfile"
-      component={InfProfile}
-      options={{
-        title: 'Editar Perfil',
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: '#fff', 
-          shadowColor: '#fff',
-          elevation: 0,
-        }, 
-        
-
-        headerBackTitleVisible: false,
-        headerLeft: () => (
-
-          <View style={{ marginLeft: 15 }}>
-            <TouchableOpacity onPress={() => navigation.navigate('Perfil')}>
-              <Ionic name="close-outline" style={{ fontSize: 35 }} />
-            </TouchableOpacity>
-          </View>
-
-        ),
       }}
     />
   </Stack.Navigator>
 );
 
 
-const AppStack = ({navigation}) => {
+const AppStack = ({ navigation }) => {
   const getTabBarVisibility = (route) => {
     const routeName = route.state
       ? route.state.routes[route.state.index].name
@@ -143,34 +345,26 @@ const AppStack = ({navigation}) => {
     }
     return true;
   };
-  const handleSignOut=()=>{
-    signOut(auth)
-    .then(()=>{
-       console.log('¡Sesión Cerrada exitosamente!')
-       navigation.navigate('LoginScreen1');
-       Alert.alert('¡Sesión Cerrada exitosame!')
-
-    })
-    .catch(error=>{
-       console.log(error)
-    })
- }
 
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: COLORS.black,
+      screenOptions={{
+        tabBarActiveTintColor: COLORS.white,
+        tabBarStyle: { backgroundColor: darkGreen },
+        tabBarInactiveTintColor: '#c3c3c3'
+
       }}>
+
       <Tab.Screen
-        name="Home"
+        name="Inicio"
 
         component={FeedStack}
         options={({ route }) => ({
-          tabBarLabel: 'Inicio',
+          //tabBarLabel: 'Inicio',
           headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
-              name="home-outline"
+              name="home"
               color={color}
               size={size}
             />
@@ -179,55 +373,73 @@ const AppStack = ({navigation}) => {
       />
       <Tab.Screen
         name="Mensajes"
-        component={HomeScreen}
+        component={ChatGroupScreen}
         options={({ route }) => ({
           tabBarVisible: getTabBarVisibility(route),
+          headerTitleStyle: {
+            color: COLORS.white,
+
+            fontSize: 18,
+          },
+
+          headerShown: false,
+          headerStyle: {
+            backgroundColor: COLORS.primary
+          },
+
           tabBarIcon: ({ color, size }) => (
             <Ionicons
-              name="chatbox-ellipses-outline"
+              name="chatbox-ellipses"
               color={color}
               size={size}
             />
           ),
         })}
       />
+
       <Tab.Screen
         name="Añadir"
         component={AddPostScreen}
         options={({ route }) => ({
           tabBarVisible: getTabBarVisibility(route),
+
+          headerTitleStyle: {
+            color: COLORS.white,
+
+            fontSize: 18,
+          },
+          headerStyle: {
+            backgroundColor: darkGreen,
+            borderBottomEndRadius:15,
+          borderBottomStartRadius:15
+          },
           tabBarIcon: ({ color, size }) => (
             <Ionicons
-              name="add-circle-outline"
+              name="add-circle"
               color={color}
               size={size}
             />
           ),
+
         })}
-        
+
       />
-      
+
       <Tab.Screen
         name="Perfil"
-        component={ProfileB}
+        component={ProfileGroupScreen}
         options={{
-          headerRight: () => (
-            <View style={{ marginRight: 15 }}>
-              <Ionic
-                name="log-out-outline"
-                size={24}
-                backgroundColor="#fff"
-                color="#000000"
-                onPress={handleSignOut}
-              />
-            </View>
-
-          ),
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" color={color} size={size} />
+            <Ionicons name="person" color={color} size={size} />
           ),
+
+
         }}
+        
       />
+
+
 
     </Tab.Navigator>
   );

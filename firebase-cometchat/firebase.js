@@ -29,24 +29,25 @@ import {
   where
   
 } from 'firebase/firestore'
-import { getStorage } from 'firebase/storage';
+import { getStorage,deleteObject,ref } from 'firebase/storage';
 
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 export const firebaseConfig = {
-  apiKey: "AIzaSyAVsFDHo1vfLMtmFfM_BXgvrhE8oTylxOA",
-  authDomain: "chat-trueque-01.firebaseapp.com",
-  projectId: "chat-trueque-01",
-  storageBucket: "chat-trueque-01.appspot.com",
-  messagingSenderId: "773737046110",
-  appId: "1:773737046110:web:b3d6781554b0d1f2f8d4cf",
-  measurementId: "G-DQDHXM8N6R"
+  apiKey: "AIzaSyBVSwzqvZznidybn2CduSP3m5FGYjaK4As",
+  authDomain: "trueque2-4ab73.firebaseapp.com",
+  projectId: "trueque2-4ab73",
+  storageBucket: "trueque2-4ab73.appspot.com",
+  messagingSenderId: "459337376166",
+  appId: "1:459337376166:web:d95cdfb57a896cb00e2f67"
+  //measurementId: "G-DQDHXM8N6R"
 };
 const provider = new GoogleAuthProvider();
 
 export const app=initializeApp(firebaseConfig);
 export const database=getFirestore(app);
 export const storage=getStorage(app);
+export const auth = getAuth(app);
 
 
 
@@ -78,6 +79,9 @@ export {
   arrayUnion,
   arrayRemove,
   updateDoc,
-  where
+  where,
+  deleteObject,
+  ref,
+  
 
 }

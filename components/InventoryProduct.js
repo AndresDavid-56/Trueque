@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView,TouchableOpacity} from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import { database } from '../firebase-cometchat/firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
@@ -12,6 +12,8 @@ import 'moment/locale/es';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Product from './Product';
+import { COLORS } from './ProfileBody';
+import { FeedStack } from '../other/AppStack';
 
 
 
@@ -28,6 +30,37 @@ export default function InventoryProduct({
 
 }) {
     const navigation = useNavigation();
+
+    const Producto = ({props}) => {
+
+        return (
+
+            <View
+                style={styles.feedItem}>
+                <View>
+                    <View>
+
+                        <TouchableOpacity onPress={() => navigation.navigate('InventoryEditScreen',{ itemId: id })}>
+                        
+
+                        <Image source={{ uri: postImg }} style={{
+                            width: 130,
+                            height: 150,
+                            marginVertical: 0.5,
+                            backgroundColor: 'white',
+
+
+                        }} resizeMode="contain" >
+
+                        </Image></TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        );
+
+
+    }
+ 
 
 
     const onDelete = () => {
@@ -47,46 +80,7 @@ export default function InventoryProduct({
 
 
     return (
-
-        <View style={styles.feedItem} >
-
-
-
-
-            <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                    <View>
-
-
-                        <Text style={styles.name}>{titulo}</Text>
-
-                        <Text style={styles.timestamp}>hace {moment(timestamp).fromNow('ss')}</Text>
-
-
-                    </View>
-                    <View>
-                        <Ionicons onPress={onDelete} name="trash" size={26} color="#73788B" style={{ marginTop: 5 }} />
-
-                        <Ionicons onPress={() => navigation.navigate('Editposteo', { itemId: id })} name="create" size={24} color="#73788B" style={{ marginTop: 15 }} />
-
-
-                    </View>
-                </View>
-                <Text style={styles.post}>{desc}</Text>
-                <Image source={{ uri: postImg }} style={styles.postImage} resizeMode="contain" ></Image>
-                <Text style={styles.post}>Publicado por: {userName}</Text>
-
-                <View style={{ flexDirection: "row", paddingRight: 40 }}>
-
-
-
-                    {/*
-                            <Ionicons name="heart-outline" size={24} color="#73788B" style={{ marginRight: 16 }} />
-            <Ionicons name="chatbubbles-outline" size={24} color="#73788B" />*/}
-                </View>
-
-            </View>
-        </View>
+        <Producto></Producto>
     )
 
 
@@ -117,14 +111,17 @@ const styles = StyleSheet.create({
         fontWeight: "500"
     },
     feed: {
-        marginHorizontal: 16
+        marginHorizontal: 16,
+    
     },
     feedItem: {
-        backgroundColor: "#FFF",
-        borderRadius: 5,
-        padding: 8,
-        flexDirection: "row",
-        marginVertical: 8,
+        paddingVertical: 5,
+        marginVertical: 0.5,
+        justifyContent:'space-between',
+
+        width:130,
+        height:150
+        
     },
     avatar: {
         width: 36,
